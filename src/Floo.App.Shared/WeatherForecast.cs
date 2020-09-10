@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Floo.Core.Shared
+namespace Floo.App.Shared
 {
     public class WeatherForecast
     {

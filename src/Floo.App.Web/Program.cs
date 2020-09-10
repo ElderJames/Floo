@@ -1,13 +1,11 @@
 using System;
 using System.Net.Http;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Text;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+using Floo.App.Shared;
+using Floo.App.Shared.Impl;
 
 namespace Floo.App.Web
 {
@@ -25,6 +23,8 @@ namespace Floo.App.Web
             builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("Floo.ServerAPI"));
 
             builder.Services.AddApiAuthorization();
+
+            builder.Services.AddScoped<IWeatherForecastService, WeatherForecastService>();
 
             await builder.Build().RunAsync();
         }

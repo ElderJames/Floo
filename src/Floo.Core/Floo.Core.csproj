@@ -4,4 +4,8 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Floo.App.Shared\Floo.App.Shared.csproj" />
+    <ProjectReference Include="..\Floo.Core.Shared\Floo.Core.Shared.csproj" />
+  </ItemGroup>
 </Project>

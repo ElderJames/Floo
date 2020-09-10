@@ -1,9 +1,9 @@
 ﻿@page "/fetchdata"
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
-@using Floo.Core.Shared
+@using Floo.App.Shared
 @attribute [Authorize]
-@inject HttpClient Http
+@inject IWeatherForecastService service;
 
 <h1>Weather forecast</h1>
 
@@ -45,7 +45,7 @@ else
     {
         try
         {
-            forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
+            forecasts = (await service.GetWeatherForecasts()).ToArray();
         }
         catch (AccessTokenNotAvailableException exception)
         {

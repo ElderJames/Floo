@@ -12,6 +12,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Floo.App.Web\Floo.App.Web.csproj" />
     <ProjectReference Include="..\Floo.Core.Shared\Floo.Core.Shared.csproj" />
+    <ProjectReference Include="..\Floo.Core\Floo.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
