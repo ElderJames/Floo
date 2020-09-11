@@ -8,6 +8,9 @@ using Microsoft.Extensions.Hosting;
 using Floo.App.Server.Data;
 using Floo.App.Server.Models;
 using Floo.App.Shared;
+using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
+using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Components.Server;
 
 namespace Floo.App.Server
 {
@@ -24,6 +27,10 @@ namespace Floo.App.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllersWithViews();
+            services.AddRazorPages();
+            services.AddServerSideBlazor();
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
@@ -37,8 +44,8 @@ namespace Floo.App.Server
             services.AddAuthentication()
                 .AddIdentityServerJwt();
 
-            services.AddControllersWithViews();
-            services.AddRazorPages();
+            services.AddScoped<AuthenticationStateProvider, ServerAuthenticationStateProvider>();
+            services.AddScoped<SignOutSessionStateManager>();
 
             services.AddProxyServer(options =>
             {
@@ -76,7 +83,8 @@ namespace Floo.App.Server
             {
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();
-                endpoints.MapFallbackToFile("index.html");
+                endpoints.MapBlazorHub();
+                endpoints.MapFallbackToPage("/_Host");
             });
         }
     }
