@@ -16,7 +16,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{0A00BD02-F38
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "core", "core", "{FCF35B08-16A1-4EF2-891C-3071694BB405}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Floo.App.Shared", "src\Floo.App.Shared\Floo.App.Shared.csproj", "{BC9586F8-DA18-4EE4-AE3A-251069070A5F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Floo.App.Shared", "src\Floo.App.Shared\Floo.App.Shared.csproj", "{BC9586F8-DA18-4EE4-AE3A-251069070A5F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{571D9C9F-D1B7-44FC-B5E0-E065BA38C345}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

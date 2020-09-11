@@ -7,7 +7,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Floo.App.Server.Data;
 using Floo.App.Server.Models;
-using Floo.Core.Services;
 using Floo.App.Shared;
 
 namespace Floo.App.Server
@@ -41,7 +40,10 @@ namespace Floo.App.Server
             services.AddControllersWithViews();
             services.AddRazorPages();
 
-            services.AddScoped<IWeatherForecastService, WeatherForecastService>();
+            services.AddProxyServer(options =>
+            {
+                options.AssemblyString = typeof(IWeatherForecastService).Assembly.FullName;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
