@@ -35,7 +35,7 @@ namespace Floo.App.Server
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<ApplicationUser>(options => Configuration.GetSection("Identity").Bind(options))
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddIdentityServer()
