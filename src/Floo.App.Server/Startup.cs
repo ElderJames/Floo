@@ -5,12 +5,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Floo.App.Server.Data;
-using Floo.App.Server.Models;
 using Floo.App.Shared;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server;
+using Floo.Core.Entities.Identity;
+using Floo.Infrastructure;
+using Floo.Infrastructure.Persistence;
 
 namespace Floo.App.Server
 {
@@ -35,17 +36,19 @@ namespace Floo.App.Server
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDefaultIdentity<ApplicationUser>(options => Configuration.GetSection("Identity").Bind(options))
+            services.AddDefaultIdentity<User>(options => Configuration.GetSection("Identity").Bind(options))
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddIdentityServer()
-                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+                   .AddApiAuthorization<User, ApplicationDbContext>();
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
 
             services.AddScoped<AuthenticationStateProvider, ServerAuthenticationStateProvider>();
             services.AddScoped<SignOutSessionStateManager>();
+
+            services.AddFlooEntityStorage<ApplicationDbContext>();
 
             services.AddProxyServer(options =>
             {

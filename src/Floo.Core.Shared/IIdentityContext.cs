@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Floo.Infrastructure.Persistence
+namespace Floo.Core.Shared
 {
-    class FlooDbContext
+    public interface IIdentityContext
     {
+        long? UserId { get; }
+
+        string UserName { get; }
     }
 }

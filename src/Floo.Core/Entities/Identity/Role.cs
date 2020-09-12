@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Floo.Core.Shared;
+using Microsoft.AspNetCore.Identity;
+using System;
 
-namespace Floo.Core.Shared
+namespace Floo.Core.Entities.Identity
 {
-    public abstract class BaseEntity : IEntity<long>
+    public class Role : IdentityRole<long>, IEntity<long>
     {
-        public long Id { get; set; }
-
         public long CreatedBy { get; set; }
 
         public long UpdatedBy { get; set; }

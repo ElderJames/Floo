@@ -8,5 +8,11 @@
 
     <PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="5.0.0-preview.8.20414.8" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.0-preview.8.20414.8" />
+
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.0-preview.8.20407.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Floo.Core\Floo.Core.csproj" />
   </ItemGroup>
 </Project>
