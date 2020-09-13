@@ -5,7 +5,9 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using Floo.Core.Shared.HttpProxy.Extensions;
@@ -22,6 +24,13 @@ namespace Floo.Core.Shared.HttpProxy
 
         public Type ReturnDataType { get; set; }
 
+        private JsonSerializerOptions jsonOptions = new JsonSerializerOptions
+        {
+            IgnoreNullValues = true,
+            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+            PropertyNameCaseInsensitive = true
+        };
+
         public object Execute(ApiActionContext context)
         {
             if (ReturnTaskType.IsGenericType && ReturnTaskType.GetGenericTypeDefinition() == typeof(Task<>))
@@ -34,6 +43,11 @@ namespace Floo.Core.Shared.HttpProxy
         {
             foreach (var parameter in context.ApiActionDescriptor.Parameters)
             {
+                if (parameter.Value is CancellationToken)
+                {
+                    continue;
+                }
+
                 if (parameter.IsUriParameterType || parameter.ParameterType.IsUriParameterTypeArray())
                 {
                     var uri = context.RequestMessage.RequestUri;
@@ -43,7 +57,7 @@ namespace Floo.Core.Shared.HttpProxy
                 }
                 else
                 {
-                    var jsonStr = parameter.Value == null ? null : JsonSerializer.Serialize(parameter.Value);
+                    var jsonStr = parameter.Value == null ? null : JsonSerializer.Serialize(parameter.Value, jsonOptions);
                     context.RequestMessage.Content = new StringContent(jsonStr, Encoding.UTF8, "application/json");
                     context.RequestMessage.Method = HttpMethod.Post;
                 }
@@ -56,7 +70,7 @@ namespace Floo.Core.Shared.HttpProxy
 
             if (context.ResponseMessage.Content.Headers.ContentType.MediaType == "application/json")
             {
-                return JsonSerializer.Deserialize(responseStr, dataType);
+                return JsonSerializer.Deserialize(responseStr, dataType, jsonOptions);
             }
 
             if (dataType.IsUriParameterType())

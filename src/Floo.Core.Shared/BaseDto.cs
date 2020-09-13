@@ -1,13 +1,13 @@
-﻿using Floo.Core.Shared;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Floo.Core.Entities.Cms
+namespace Floo.Core.Shared
 {
-    public class Article : BaseEntity
+    public class BaseDto<TKey>
     {
+        public TKey Id { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Floo.Core.Entities.Cms;
+using Floo.Core.Entities.Cms.Articles;
 using Floo.Core.Entities.Identity;
 using Floo.Core.Shared;
 using IdentityServer4.EntityFramework.Entities;
@@ -19,13 +20,15 @@ namespace Floo.Infrastructure.Persistence
     public class ApplicationDbContext : IdentityDbContext<User, Role, long, Core.Entities.Identity.UserClaim, UserRole, UserLogin, RoleClaim, UserToken>, IPersistedGrantDbContext, IDbContext
     {
         private readonly IOptions<OperationalStoreOptions> _operationalStoreOptions;
-        private IIdentityContext identityContext;
+        private IIdentityContext _identityContext;
 
         public ApplicationDbContext(
              IOptions<OperationalStoreOptions> operationalStoreOptions,
-            DbContextOptions<ApplicationDbContext> options) : base(options)
+            DbContextOptions<ApplicationDbContext> options,
+            IIdentityContext identityContext) : base(options)
         {
             _operationalStoreOptions = operationalStoreOptions;
+            _identityContext = identityContext;
         }
 
         /// <summary>
@@ -80,7 +83,7 @@ namespace Floo.Infrastructure.Persistence
             var modifiedSourceInfo = this.ChangeTracker.Entries()
                 .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
 
-            var userId = this.identityContext.UserId ?? 0;
+            var userId = this._identityContext.UserId ?? 0;
 
             foreach (var entry in modifiedSourceInfo)
             {

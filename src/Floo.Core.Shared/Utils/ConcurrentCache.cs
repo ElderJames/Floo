@@ -5,42 +5,20 @@ using System.Threading;
 
 namespace Floo.Core.Shared.Utils
 {
-    /// <summary>
-    /// 表示线程安全的内存缓存
-    /// </summary>
-    /// <typeparam name="TKey">键</typeparam>
-    /// <typeparam name="TValue">值</typeparam>
     public class ConcurrentCache<TKey, TValue>
     {
-        /// <summary>
-        /// 线程安全字典
-        /// </summary>
         private readonly ConcurrentDictionary<TKey, Lazy<TValue>> dictionary;
 
-        /// <summary>
-        /// 线程安全的内存缓存
-        /// </summary>
         public ConcurrentCache()
         {
             this.dictionary = new ConcurrentDictionary<TKey, Lazy<TValue>>();
         }
 
-        /// <summary>
-        /// 线程安全的内存缓存
-        /// </summary>
-        /// <param name="comparer">键的比较器</param>
-        /// <exception cref="ArgumentNullException"></exception>
         public ConcurrentCache(IEqualityComparer<TKey> comparer)
         {
             this.dictionary = new ConcurrentDictionary<TKey, Lazy<TValue>>(comparer);
         }
 
-        /// <summary>
-        /// 获取或添加缓存
-        /// </summary>
-        /// <param name="key">键</param>
-        /// <param name="valueFactory">生成缓存内容的委托</param>
-        /// <returns></returns>
         public TValue GetOrAdd(TKey key, Func<TKey, TValue> valueFactory)
         {
             return this.dictionary
@@ -64,7 +42,7 @@ namespace Floo.Core.Shared.Utils
             }
             else
             {
-                value = default(TValue);
+                value = default;
                 return false;
             }
         }
@@ -76,7 +54,7 @@ namespace Floo.Core.Shared.Utils
                 if (dictionary.ContainsKey(key))
                     return dictionary[key].Value;
 
-                return default(TValue);
+                return default;
             }
             set
             {
