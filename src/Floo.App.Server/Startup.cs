@@ -56,6 +56,12 @@ namespace Floo.App.Server
             {
                 options.AssemblyString = typeof(IWeatherForecastService).Assembly.FullName;
             });
+
+            services.AddProxyClient(options =>
+            {
+                options.RequestHost = "https://localhost:5001";
+                options.AssemblyString = new[] { typeof(IWeatherForecastService).Assembly.FullName };
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

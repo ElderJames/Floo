@@ -28,7 +28,7 @@ namespace Floo.Core.Entities.Cms.Channels
             return Mapper.Map<Channel, ChannelDto>(entity);
         }
 
-        public async Task<ListResult<ChannelDto>> QueryListAsync(BaseQueryDto query)
+        public async Task<ListResult<ChannelDto>> QueryListAsync(BaseQuery query)
         {
             var result = await _channelStorage.QueryAsync(query);
             return Mapper.Map<ListResult<Channel>, ListResult<ChannelDto>>(result);

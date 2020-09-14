@@ -12,6 +12,6 @@ namespace Floo.App.Shared.Cms.SpecialColumns
 
         public Task<bool> UpdateAsync(SpecialColumnDto specialColumn, CancellationToken cancellation = default);
 
-        public Task<ListResult<SpecialColumnDto>> QueryListAsync(BaseQueryDto query);
+        public Task<ListResult<SpecialColumnDto>> QueryListAsync(BaseQuery query);
     }
 }

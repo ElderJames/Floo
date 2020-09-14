@@ -28,7 +28,7 @@ namespace Floo.Core.Entities.Cms.Tags
             return Mapper.Map<Tag, TagDto>(entity);
         }
 
-        public async Task<ListResult<TagDto>> QueryListAsync(BaseQueryDto query)
+        public async Task<ListResult<TagDto>> QueryListAsync(BaseQuery query)
         {
             var result = await _tagStorage.QueryAsync(query);
             return Mapper.Map<ListResult<Tag>, ListResult<TagDto>>(result);

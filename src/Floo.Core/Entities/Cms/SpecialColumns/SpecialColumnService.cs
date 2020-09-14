@@ -28,7 +28,7 @@ namespace Floo.Core.Entities.Cms.SpecialColumns
             return Mapper.Map<SpecialColumn, SpecialColumnDto>(entity);
         }
 
-        public async Task<ListResult<SpecialColumnDto>> QueryListAsync(BaseQueryDto query)
+        public async Task<ListResult<SpecialColumnDto>> QueryListAsync(BaseQuery query)
         {
             var result = await _specialColumnStorage.QueryAsync(query);
             return Mapper.Map<ListResult<SpecialColumn>, ListResult<SpecialColumnDto>>(result);

@@ -12,6 +12,6 @@ namespace Floo.App.Shared.Cms.Comments
 
         public Task<bool> UpdateAsync(CommentDto comment, CancellationToken cancellation = default);
 
-        public Task<ListResult<CommentDto>> QueryListAsync(BaseQueryDto query);
+        public Task<ListResult<CommentDto>> QueryListAsync(BaseQuery query);
     }
 }

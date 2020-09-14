@@ -23,7 +23,7 @@ namespace Floo.Core.Shared
 
         IQueryable<TEntity> Query(Expression<Func<TEntity, bool>> predicate);
 
-        Task<ListResult<TEntity>> QueryAsync(BaseQueryDto query, Func<IQueryable<TEntity>, Expression<Func<TEntity, bool>>> predicate = null);
+        Task<ListResult<TEntity>> QueryAsync(BaseQuery query, Action<IQueryable<TEntity>> linqAction = null);
 
         void Update(TEntity entity);
 

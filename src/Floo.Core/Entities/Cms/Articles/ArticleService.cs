@@ -1,6 +1,7 @@
 ﻿using Floo.App.Shared.Cms.Articles;
 using Floo.Core.Shared;
 using Floo.Core.Shared.Utils;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -28,9 +29,13 @@ namespace Floo.Core.Entities.Cms.Articles
             return Mapper.Map<Article, ArticleDto>(entity);
         }
 
-        public async Task<ListResult<ArticleDto>> QueryListAsync(BaseQueryDto query)
+        public async Task<ListResult<ArticleDto>> QueryListAsync(ArticleQuery query)
         {
-            var result = await _articleStorage.QueryAsync(query);
+            var result = await _articleStorage.QueryAsync(query, linq =>
+            {
+                linq = linq.Where(x => x.ChannelId == query.ChannelId)
+                .Where(x => x.Title.Contains(query.Title));
+            });
             return Mapper.Map<ListResult<Article>, ListResult<ArticleDto>>(result);
         }
 

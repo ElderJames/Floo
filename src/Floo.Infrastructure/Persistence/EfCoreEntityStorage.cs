@@ -67,12 +67,12 @@ namespace Floo.Infrastructure.Persistence
             return this._context.Set<TEntity>().Where(predicate);
         }
 
-        public async Task<ListResult<TEntity>> QueryAsync(BaseQueryDto query, Func<IQueryable<TEntity>, Expression<Func<TEntity, bool>>> predicate = null)
+        public async Task<ListResult<TEntity>> QueryAsync(BaseQuery query, Action<IQueryable<TEntity>> linqAction = null)
         {
             var linq = this._context.Set<TEntity>().AsQueryable();
-            if (predicate != null)
+            if (linqAction != null)
             {
-                linq.Where(predicate.Invoke(linq));
+                linqAction.Invoke(linq);
             }
 
             var result = new ListResult<TEntity>(query.Offset, query.Limit);

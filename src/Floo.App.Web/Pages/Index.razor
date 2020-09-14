@@ -1,7 +1,18 @@
 ﻿@page "/"
+@page "/{channelName}"
 
-<h1>Hello, world!</h1>
-
-Welcome to your new app.
-
-<SurveyPrompt Title="How is Blazor working for you?" />
+<AntList DataSource="@_articleList" ItemLayout="@AntDirectionVHType.Vertical">
+    <Item Context="item">
+        <AntListItemMeta Description="@item.Summary">
+            <Title>
+                <a href="/article/@item.Slug">@item.Title</a>
+            </Title>
+        </AntListItemMeta>
+        
+    </Item>
+    <Footer>
+        <div>
+            <b>ant design</b> footer part
+        </div>
+    </Footer>
+</AntList>

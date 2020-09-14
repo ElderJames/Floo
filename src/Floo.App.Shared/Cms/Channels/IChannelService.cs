@@ -12,6 +12,6 @@ namespace Floo.App.Shared.Cms.Channels
 
         public Task<bool> UpdateAsync(ChannelDto channel, CancellationToken cancellation = default);
 
-        public Task<ListResult<ChannelDto>> QueryListAsync(BaseQueryDto query);
+        public Task<ListResult<ChannelDto>> QueryListAsync(BaseQuery query);
     }
 }

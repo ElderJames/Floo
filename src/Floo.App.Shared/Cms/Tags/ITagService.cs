@@ -12,6 +12,6 @@ namespace Floo.App.Shared.Cms.Tags
 
         public Task<bool> UpdateAsync(TagDto tag, CancellationToken cancellation = default);
 
-        public Task<ListResult<TagDto>> QueryListAsync(BaseQueryDto query);
+        public Task<ListResult<TagDto>> QueryListAsync(BaseQuery query);
     }
 }

@@ -28,7 +28,7 @@ namespace Floo.Core.Entities.Cms.Comments
             return Mapper.Map<Comment, CommentDto>(entity);
         }
 
-        public async Task<ListResult<CommentDto>> QueryListAsync(BaseQueryDto query)
+        public async Task<ListResult<CommentDto>> QueryListAsync(BaseQuery query)
         {
             var result = await _commentStorage.QueryAsync(query);
             return Mapper.Map<ListResult<Comment>, ListResult<CommentDto>>(result);

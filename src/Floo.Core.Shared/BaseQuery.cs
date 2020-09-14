@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 
 namespace Floo.Core.Shared
 {
-    public class BaseQueryDto
+    public class BaseQuery
     {
-        public string Sort { get; set; }
+        public int Limit { get; set; } = 10;
 
-        public int Limit { get; set; }
-
-        public int Offset { get; set; }
+        public int Offset { get; set; } = 0;
 
         public IEnumerable<string> OrderBy { get; set; } = Enumerable.Empty<string>();
 
