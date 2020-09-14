@@ -1,10 +1,10 @@
-using System;
-using System.Net.Http;
-using System.Threading.Tasks;
+using Floo.App.Shared;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using Floo.App.Shared;
+using System;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Floo.App.Web
 {
@@ -22,7 +22,7 @@ namespace Floo.App.Web
             builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("Floo.ServerAPI"));
 
             builder.Services.AddApiAuthorization();
-
+            builder.Services.AddAntDesign();
             builder.Services.AddProxyClient(options =>
             {
                 options.RequestHost = builder.HostEnvironment.BaseAddress;

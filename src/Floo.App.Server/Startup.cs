@@ -1,17 +1,17 @@
+using Floo.App.Shared;
+using Floo.Core.Entities.Identity;
+using Floo.Infrastructure;
+using Floo.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Components.Server;
+using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Floo.App.Shared;
-using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
-using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Components.Server;
-using Floo.Core.Entities.Identity;
-using Floo.Infrastructure;
-using Floo.Infrastructure.Persistence;
 
 namespace Floo.App.Server
 {
@@ -49,6 +49,8 @@ namespace Floo.App.Server
             services.AddScoped<SignOutSessionStateManager>();
 
             services.AddFlooEntityStorage<ApplicationDbContext>();
+
+            services.AddAntDesign();
 
             services.AddProxyServer(options =>
             {

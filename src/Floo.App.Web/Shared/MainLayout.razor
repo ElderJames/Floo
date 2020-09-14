@@ -1,16 +1,33 @@
-@inherits LayoutComponentBase
-
-<div class="sidebar">
-    <NavMenu />
-</div>
-
-<div class="main">
-    <div class="top-row px-4 auth">
-        <LoginDisplay />
-        <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+﻿@inherits LayoutComponentBase
+@*<div class="sidebar">
+        <NavMenu />
     </div>
 
-    <div class="content px-4">
-        @Body
-    </div>
-</div>
+    <div class="main">
+        <div class="top-row px-4 auth">
+            <LoginDisplay />
+            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+        </div>
+
+        <div class="content px-4">
+            @Body
+        </div>
+    </div>*@
+
+
+<Layout Class="layout" Id="main-layout">
+    <Header>
+        <div class="logo" />
+        <Menu Mode="MenuMode.Horizontal">
+            <MenuItem Key="1">nav 1</MenuItem>
+            <MenuItem Key="2">nav 2</MenuItem>
+            <MenuItem Key="3">nav 3</MenuItem>
+        </Menu>
+    </Header>
+    <Content Style="padding: 0 50px;">
+        <div class="site-layout-content">
+            @Body
+        </div>
+    </Content>
+    <Footer Style="text-align: center; ">Floo ©2020 Created by James</Footer>
+</Layout>
