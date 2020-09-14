@@ -27,7 +27,8 @@ namespace Floo.App.Web
             {
                 options.RequestHost = builder.HostEnvironment.BaseAddress;
                 options.AssemblyString = new[] { typeof(IWeatherForecastService).Assembly.FullName };
-            });
+            })
+            .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
 
             await builder.Build().RunAsync();
         }

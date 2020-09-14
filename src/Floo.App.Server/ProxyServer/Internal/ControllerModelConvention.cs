@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Floo.Core.Shared.HttpProxy.Attributes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
-
-using Authorize = Floo.Core.Shared.HttpProxy.Attributes.AuthorizeAttribute;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using FlooAuthorizeAttribute = Floo.Core.Shared.HttpProxy.Attributes.AuthorizeAttribute;
+using MvcAuthorizeAttribute = Microsoft.AspNetCore.Authorization.AuthorizeAttribute;
 
 namespace Floo.App.Server.ProxyServer.Internal
 {
@@ -33,14 +33,14 @@ namespace Floo.App.Server.ProxyServer.Internal
                     var template = routeAttr.Template;
                     controllerAttrs.Add(new RouteAttribute(template));
                 }
-                if (att is Authorize authorize)
+
+                if (att is FlooAuthorizeAttribute authorize)
                 {
-                    controllerAttrs.Add(new Microsoft.AspNetCore.Authorization.AuthorizeAttribute()
-                    {
+                    controller.Filters.Add(new AuthorizeFilter(new[] { new MvcAuthorizeAttribute() {
                         AuthenticationSchemes = authorize.AuthenticationSchemes,
                         Policy = authorize.Policy,
                         Roles = authorize.Roles
-                    });
+                    }}));
                 }
             }
 

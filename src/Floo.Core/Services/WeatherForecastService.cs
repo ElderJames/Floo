@@ -1,4 +1,5 @@
 ﻿using Floo.App.Shared;
+using Floo.Core.Shared.HttpProxy.Attributes;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
@@ -6,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace Floo.Core.Services
 {
+    [Authorize]
     public class WeatherForecastService : IWeatherForecastService
     {
         private static readonly string[] Summaries = new[]
-{
+        {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 

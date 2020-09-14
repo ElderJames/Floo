@@ -2,12 +2,17 @@
 using IdentityModel;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
+using System.Security.Principal;
 
 namespace Floo.Infrastructure
 {
     public class IdentityContext : IIdentityContext
     {
         public static readonly IdentityContext Empty = new IdentityContext();
+        private long? userId;
+        private string userName;
+
+        private IPrincipal User { get; }
 
         public IdentityContext()
         {
@@ -15,23 +20,38 @@ namespace Floo.Infrastructure
 
         public IdentityContext(long? userId, string userName)
         {
-            this.UserId = userId;
-            this.UserName = UserName;
+            this.userId = userId;
+            this.userName = userName;
         }
 
         public IdentityContext(IHttpContextAccessor httpContextAccessor)
         {
-            var user = httpContextAccessor.HttpContext?.User;
-            if (user != null)
+            User = httpContextAccessor.HttpContext?.User;
+        }
+
+        public virtual long? UserId
+        {
+            get
             {
-                this.UserId = this.GetClaimValueAsLong(user, JwtClaimTypes.Subject);
-                this.UserName = this.GetClaimValue(user, JwtClaimTypes.Name);
+                if (!userId.HasValue && User != null && User is ClaimsPrincipal user)
+                {
+                    userId = this.GetClaimValueAsLong(user, ClaimTypes.NameIdentifier);
+                }
+                return userId;
             }
         }
 
-        public virtual long? UserId { get; private set; }
-
-        public virtual string UserName { get; private set; }
+        public virtual string UserName
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(userName) && User != null && User is ClaimsPrincipal user)
+                {
+                    userName = this.GetClaimValue(user, JwtClaimTypes.Name);
+                }
+                return userName;
+            }
+        }
 
         private string GetClaimValue(ClaimsPrincipal user, string claimType)
         {

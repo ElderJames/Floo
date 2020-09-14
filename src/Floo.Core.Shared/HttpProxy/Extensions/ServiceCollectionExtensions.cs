@@ -10,14 +10,14 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddProxyClient(this IServiceCollection services, Action<ProxyClientOptions> optionAction)
+        public static IHttpClientBuilder AddProxyClient(this IServiceCollection services, Action<ProxyClientOptions> optionAction)
         {
             var options = new ProxyClientOptions();
             optionAction(options);
 
-            var httpClientBuilders = services.AddHttpClient(options.RequestHost, client => { client.BaseAddress = new Uri(options.RequestHost); });
+            var httpClientBuilder = services.AddHttpClient(options.RequestHost, client => { client.BaseAddress = new Uri(options.RequestHost); });
 
-            httpClientBuilders.AddTransientHttpErrorPolicy(builder => builder.WaitAndRetryAsync(options.RetrySleepDurations));
+            httpClientBuilder.AddTransientHttpErrorPolicy(builder => builder.WaitAndRetryAsync(options.RetrySleepDurations));
 
             foreach (var type in options.AssemblyString.SelectMany(x => Assembly.Load(x).ExportedTypes).Where(options.Filter))
                 services.AddSingleton(type, sp =>
@@ -30,7 +30,7 @@ namespace Microsoft.Extensions.DependencyInjection
                         return HttpClientProxyGenerator.Create(type, factory.CreateClient(options.RequestHost), httpContextAccessor);
                 });
 
-            return services;
+            return httpClientBuilder;
         }
     }
 }
