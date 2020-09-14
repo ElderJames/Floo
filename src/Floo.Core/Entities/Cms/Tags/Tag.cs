@@ -1,6 +1,6 @@
 ﻿using Floo.Core.Shared;
 
-namespace Floo.Core.Entities.Cms
+namespace Floo.Core.Entities.Cms.Tags
 {
     public class Tag : BaseEntity
     {

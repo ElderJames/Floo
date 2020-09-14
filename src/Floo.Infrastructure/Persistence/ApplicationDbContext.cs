@@ -1,5 +1,8 @@
-﻿using Floo.Core.Entities.Cms;
-using Floo.Core.Entities.Cms.Articles;
+﻿using Floo.Core.Entities.Cms.Articles;
+using Floo.Core.Entities.Cms.Channels;
+using Floo.Core.Entities.Cms.Comments;
+using Floo.Core.Entities.Cms.SpecialColumns;
+using Floo.Core.Entities.Cms.Tags;
 using Floo.Core.Entities.Identity;
 using Floo.Core.Shared;
 using IdentityServer4.EntityFramework.Entities;

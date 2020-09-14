@@ -1,8 +1,8 @@
 ﻿using Floo.Core.Shared;
 
-namespace Floo.Core.Entities.Cms
+namespace Floo.App.Shared.Cms.Comments
 {
-    public class Comment : BaseEntity
+    public class CommentDto : BaseDto<long>
     {
         public long? ReplyId { get; set; }
 

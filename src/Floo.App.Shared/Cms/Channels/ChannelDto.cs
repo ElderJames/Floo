@@ -1,13 +1,8 @@
 ﻿using Floo.Core.Shared;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Floo.Core.Entities.Cms
+namespace Floo.App.Shared.Cms.Channels
 {
-    public class SpecialColumn : BaseEntity
+    public class ChannelDto : BaseDto<long>
     {
         public string Cover { get; set; }
 

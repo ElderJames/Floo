@@ -12,8 +12,6 @@ using Microsoft.AspNetCore.Components.Server;
 using Floo.Core.Entities.Identity;
 using Floo.Infrastructure;
 using Floo.Infrastructure.Persistence;
-using Floo.App.Shared.Cms.Articles;
-using Floo.Core.Entities.Cms.Articles;
 
 namespace Floo.App.Server
 {
@@ -55,12 +53,6 @@ namespace Floo.App.Server
             services.AddProxyServer(options =>
             {
                 options.AssemblyString = typeof(IWeatherForecastService).Assembly.FullName;
-            });
-
-            services.AddProxyClient(options =>
-            {
-                options.RequestHost = "https://localhost:5001";
-                options.AssemblyString = new[] { typeof(IWeatherForecastService).Assembly.FullName };
             });
         }
 

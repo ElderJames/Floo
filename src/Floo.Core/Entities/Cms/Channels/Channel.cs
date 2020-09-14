@@ -1,6 +1,6 @@
 ﻿using Floo.Core.Shared;
 
-namespace Floo.Core.Entities.Cms
+namespace Floo.Core.Entities.Cms.Channels
 {
     public class Channel : BaseEntity
     {

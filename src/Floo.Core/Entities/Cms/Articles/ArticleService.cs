@@ -15,10 +15,10 @@ namespace Floo.Core.Entities.Cms.Articles
             _articleStorage = articleStorage;
         }
 
-        public async Task<long> CreateAsync(ArticleDto article)
+        public async Task<long> CreateAsync(ArticleDto article, CancellationToken cancellation = default)
         {
             var entity = Mapper.Map<ArticleDto, Article>(article);
-            var result = await _articleStorage.CreateAndSaveAsync(entity);
+            var result = await _articleStorage.CreateAndSaveAsync(entity, cancellation);
             return result.Id;
         }
 
