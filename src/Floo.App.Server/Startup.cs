@@ -1,4 +1,6 @@
 using Floo.App.Shared;
+using Floo.App.Shared.Cms.Articles;
+using Floo.Core.Entities.Cms.Articles;
 using Floo.Core.Entities.Identity;
 using Floo.Infrastructure;
 using Floo.Infrastructure.Persistence;
@@ -12,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 
 namespace Floo.App.Server
 {
@@ -30,11 +33,17 @@ namespace Floo.App.Server
         {
             services.AddControllersWithViews();
             services.AddRazorPages();
-            services.AddServerSideBlazor();
+            //services.AddServerSideBlazor();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Floo.App.Server", Version = "v1" });
+            });
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    Configuration.GetConnectionString("DefaultConnection")))
+                .AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddDefaultIdentity<User>(options => Configuration.GetSection("Identity").Bind(options))
                 .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -57,11 +66,7 @@ namespace Floo.App.Server
                 options.AssemblyString = typeof(IWeatherForecastService).Assembly.FullName;
             });
 
-            services.AddProxyClient(options =>
-            {
-                options.RequestHost = "https://localhost:5001";
-                options.AssemblyString = new[] { typeof(IWeatherForecastService).Assembly.FullName };
-            });
+            services.AddScoped<IArticleService, ArticleService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -70,8 +75,11 @@ namespace Floo.App.Server
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
+                app.UseMigrationsEndPoint();
                 app.UseWebAssemblyDebugging();
+
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Floo Server v1"));
             }
             else
             {
@@ -94,8 +102,8 @@ namespace Floo.App.Server
             {
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();
-                endpoints.MapBlazorHub();
-                endpoints.MapFallbackToPage("/_Host");
+                //endpoints.MapBlazorHub();
+                endpoints.MapFallbackToFile("/index.html");
             });
         }
     }

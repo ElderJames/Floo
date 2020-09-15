@@ -13,10 +13,10 @@ namespace Floo.Core.Shared.HttpProxy.Attributes
             this.Policy = policy;
         }
 
-        public string? AuthenticationSchemes { get; set; }
+        public string AuthenticationSchemes { get; set; }
 
-        public string? Policy { get; set; }
+        public string Policy { get; set; }
 
-        public string? Roles { get; set; }
+        public string Roles { get; set; }
     }
 }
