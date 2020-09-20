@@ -27,4 +27,9 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
+
+  <ItemGroup>
+    <Watch Include="**\*.razor" />
+    <Watch Include="**\*.less" />
+  </ItemGroup>
 </Project>

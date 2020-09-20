@@ -4,24 +4,22 @@ using Floo.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Floo.Infrastructure.Migrations
+namespace Floo.App.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200913144004_CreateEntities")]
-    partial class CreateEntities
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.0-preview.8.20407.4");
+                .HasAnnotation("ProductVersion", "5.0.0-rc.1.20451.13");
 
-            modelBuilder.Entity("Floo.Core.Entities.Cms.Article", b =>
+            modelBuilder.Entity("Floo.Core.Entities.Cms.Articles.Article", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -72,7 +70,7 @@ namespace Floo.Infrastructure.Migrations
                     b.ToTable("Article");
                 });
 
-            modelBuilder.Entity("Floo.Core.Entities.Cms.Channel", b =>
+            modelBuilder.Entity("Floo.Core.Entities.Cms.Channels.Channel", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -111,7 +109,7 @@ namespace Floo.Infrastructure.Migrations
                     b.ToTable("Channel");
                 });
 
-            modelBuilder.Entity("Floo.Core.Entities.Cms.Comment", b =>
+            modelBuilder.Entity("Floo.Core.Entities.Cms.Comments.Comment", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -147,7 +145,7 @@ namespace Floo.Infrastructure.Migrations
                     b.ToTable("Comment");
                 });
 
-            modelBuilder.Entity("Floo.Core.Entities.Cms.SpecialColumn", b =>
+            modelBuilder.Entity("Floo.Core.Entities.Cms.SpecialColumns.SpecialColumn", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -186,7 +184,7 @@ namespace Floo.Infrastructure.Migrations
                     b.ToTable("SpecialColumn");
                 });
 
-            modelBuilder.Entity("Floo.Core.Entities.Cms.Tag", b =>
+            modelBuilder.Entity("Floo.Core.Entities.Cms.Tags.Tag", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -475,6 +473,10 @@ namespace Floo.Infrastructure.Migrations
                         .HasMaxLength(50000)
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Description")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
                     b.Property<string>("DeviceCode")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -483,6 +485,10 @@ namespace Floo.Infrastructure.Migrations
                     b.Property<DateTime?>("Expiration")
                         .IsRequired()
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("SessionId")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("SubjectId")
                         .HasMaxLength(200)
@@ -509,6 +515,9 @@ namespace Floo.Infrastructure.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
+                    b.Property<DateTime?>("ConsumedTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
 
@@ -517,8 +526,16 @@ namespace Floo.Infrastructure.Migrations
                         .HasMaxLength(50000)
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Description")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
                     b.Property<DateTime?>("Expiration")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("SessionId")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("SubjectId")
                         .HasMaxLength(200)
@@ -534,6 +551,8 @@ namespace Floo.Infrastructure.Migrations
                     b.HasIndex("Expiration");
 
                     b.HasIndex("SubjectId", "ClientId", "Type");
+
+                    b.HasIndex("SubjectId", "SessionId", "Type");
 
                     b.ToTable("PersistedGrants");
                 });

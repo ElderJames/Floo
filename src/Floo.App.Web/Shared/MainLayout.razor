@@ -1,35 +1,20 @@
 ﻿@inherits LayoutComponentBase
-@*<div class="sidebar">
-        <NavMenu />
-    </div>
 
-    <div class="main">
-        <div class="top-row px-4 auth">
-            <LoginDisplay />
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-        </div>
-
-        <div class="content px-4">
-            @Body
-        </div>
-    </div>*@
-
-
-<Layout Class="layout" Id="main-layout">
+<Layout Class="container" Id="main-layout">
     <Header>
+      <div class="container">
         <div class="logo" >
             <h1>🔥 Floo</h1>
         </div>
         <Menu Mode="MenuMode.Horizontal">
             <MenuItem RouterMatch="@NavLinkMatch.All" RouterLink="/">首页</MenuItem>
-            <MenuItem RouterMatch="@NavLinkMatch.All" RouterLink="/channels">频道</MenuItem>
-            <MenuItem RouterMatch="@NavLinkMatch.All" RouterLink="/special-columns">专栏</MenuItem>
+            <MenuItem RouterMatch="@NavLinkMatch.Prefix" RouterLink="/fetchdata">fetchdata</MenuItem>
+            <MenuItem RouterMatch="@NavLinkMatch.Prefix" RouterLink="/special-columns">专栏</MenuItem>
         </Menu>
+      </div>
     </Header>
-    <Content Style="padding: 0 50px;">
-        <div class="site-layout-content">
-            @Body
-        </div>
+    <Content Class="site-layout-content">
+        @Body
     </Content>
     <Footer Style="text-align: center; ">Floo ©2020 Created by James</Footer>
 </Layout>

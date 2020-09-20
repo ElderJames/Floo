@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Floo.Infrastructure.Migrations
+namespace Floo.App.Server.Migrations
 {
-    public partial class CreateEntities : Migration
+    public partial class InitialProject : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,11 +13,6 @@ namespace Floo.Infrastructure.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedBy = table.Column<long>(type: "bigint", nullable: false),
-                    UpdatedBy = table.Column<long>(type: "bigint", nullable: false),
-                    Deleted = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedAtUtc = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UpdatedAtUtc = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Slug = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Summary = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -25,7 +20,12 @@ namespace Floo.Infrastructure.Migrations
                     Cover = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Source = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ChannelId = table.Column<long>(type: "bigint", nullable: true),
-                    SpecialColumnId = table.Column<long>(type: "bigint", nullable: true)
+                    SpecialColumnId = table.Column<long>(type: "bigint", nullable: true),
+                    CreatedBy = table.Column<long>(type: "bigint", nullable: false),
+                    UpdatedBy = table.Column<long>(type: "bigint", nullable: false),
+                    Deleted = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedAtUtc = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAtUtc = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -38,14 +38,14 @@ namespace Floo.Infrastructure.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedBy = table.Column<long>(type: "bigint", nullable: false),
                     UpdatedBy = table.Column<long>(type: "bigint", nullable: false),
                     Deleted = table.Column<bool>(type: "bit", nullable: false),
                     CreatedAtUtc = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UpdatedAtUtc = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    UpdatedAtUtc = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -58,6 +58,11 @@ namespace Floo.Infrastructure.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedBy = table.Column<long>(type: "bigint", nullable: false),
+                    UpdatedBy = table.Column<long>(type: "bigint", nullable: false),
+                    Deleted = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedAtUtc = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAtUtc = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -71,12 +76,7 @@ namespace Floo.Infrastructure.Migrations
                     TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "int", nullable: false),
-                    CreatedBy = table.Column<long>(type: "bigint", nullable: false),
-                    UpdatedBy = table.Column<long>(type: "bigint", nullable: false),
-                    Deleted = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedAtUtc = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UpdatedAtUtc = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -89,15 +89,15 @@ namespace Floo.Infrastructure.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Cover = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Slug = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedBy = table.Column<long>(type: "bigint", nullable: false),
                     UpdatedBy = table.Column<long>(type: "bigint", nullable: false),
                     Deleted = table.Column<bool>(type: "bit", nullable: false),
                     CreatedAtUtc = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UpdatedAtUtc = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Cover = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Slug = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    UpdatedAtUtc = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -110,14 +110,14 @@ namespace Floo.Infrastructure.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    ReplyId = table.Column<long>(type: "bigint", nullable: true),
+                    ArticleId = table.Column<long>(type: "bigint", nullable: true),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedBy = table.Column<long>(type: "bigint", nullable: false),
                     UpdatedBy = table.Column<long>(type: "bigint", nullable: false),
                     Deleted = table.Column<bool>(type: "bit", nullable: false),
                     CreatedAtUtc = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UpdatedAtUtc = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ReplyId = table.Column<long>(type: "bigint", nullable: true),
-                    ArticleId = table.Column<long>(type: "bigint", nullable: true),
-                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    UpdatedAtUtc = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -131,7 +131,9 @@ namespace Floo.Infrastructure.Migrations
                     UserCode = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     DeviceCode = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     SubjectId = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    SessionId = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     ClientId = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Expiration = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Data = table.Column<string>(type: "nvarchar(max)", maxLength: 50000, nullable: false)
@@ -148,9 +150,12 @@ namespace Floo.Infrastructure.Migrations
                     Key = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     Type = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     SubjectId = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    SessionId = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     ClientId = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Expiration = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ConsumedTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Data = table.Column<string>(type: "nvarchar(max)", maxLength: 50000, nullable: false)
                 },
                 constraints: table =>
@@ -164,15 +169,15 @@ namespace Floo.Infrastructure.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Cover = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Slug = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedBy = table.Column<long>(type: "bigint", nullable: false),
                     UpdatedBy = table.Column<long>(type: "bigint", nullable: false),
                     Deleted = table.Column<bool>(type: "bit", nullable: false),
                     CreatedAtUtc = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UpdatedAtUtc = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Cover = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Slug = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    UpdatedAtUtc = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -185,15 +190,15 @@ namespace Floo.Infrastructure.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Alias = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Cover = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedBy = table.Column<long>(type: "bigint", nullable: false),
                     UpdatedBy = table.Column<long>(type: "bigint", nullable: false),
                     Deleted = table.Column<bool>(type: "bit", nullable: false),
                     CreatedAtUtc = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UpdatedAtUtc = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Alias = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Cover = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    UpdatedAtUtc = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -365,6 +370,11 @@ namespace Floo.Infrastructure.Migrations
                 name: "IX_PersistedGrants_SubjectId_ClientId_Type",
                 table: "PersistedGrants",
                 columns: new[] { "SubjectId", "ClientId", "Type" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PersistedGrants_SubjectId_SessionId_Type",
+                table: "PersistedGrants",
+                columns: new[] { "SubjectId", "SessionId", "Type" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
