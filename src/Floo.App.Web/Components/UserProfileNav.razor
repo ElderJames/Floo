@@ -1,0 +1,29 @@
+﻿@namespace Floo.App.Web.Components
+
+<Space Class="right">
+    <SpaceItem>
+        <NoticeIcon ClearText="清空"
+                    ViewMoreText="查看更多">
+            <NoticeList TabKey="notification"
+                        Title="通知"
+                        EmptyText="你已查看所有通知"
+                        ShowViewMore />
+            <NoticeList TabKey="message"
+                        Title="消息"
+                        EmptyText="您已读完所有消息"
+                        ShowViewMore />
+            <NoticeList TabKey="event"
+                        Title="待办"
+                        EmptyText="你已完成所有待办"
+                        ShowViewMore />
+        </NoticeIcon>
+    </SpaceItem>
+    <SpaceItem>
+        <AvatarDropdown Name="Serati Ma"
+                        Avatar="https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png"
+                        OnItemSelected="OnUserItemSelected" />
+    </SpaceItem>
+    @*<SpaceItem>
+            <SelectLang OnItemSelected="OnLangItemSelected" />
+        </SpaceItem>*@
+</Space>

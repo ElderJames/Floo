@@ -8,14 +8,24 @@
     z-index: 1;
     width: 100%;
     background-color: @component-background;
+    -webkit-box-shadow: 0 1px 3px rgba(18,18,18,.1);
+    box-shadow: 0 1px 3px rgba(18,18,18,.1);
 
-    .logo {
-      width: 120px;
-      height: 31px;
-      background: rgba(255, 255, 255, 0.2);
-      margin: 16px 24px 16px 0;
-      float: left;
-      line-height: @line-height-base;
+    .header-nav {
+      display: flex;
+
+      .logo {
+        width: 120px;
+        height: 31px;
+        background: rgba(255, 255, 255, 0.2);
+        margin: 16px 24px 16px 0;
+        float: left;
+        line-height: @line-height-base;
+      }
+
+      .ant-menu {
+        flex: 1;
+      }
     }
   }
 

@@ -2,16 +2,17 @@
 
 <Layout Class="container" Id="main-layout">
     <Header>
-      <div class="container">
-        <div class="logo" >
-            <h1>🔥 Floo</h1>
+        <div class="container header-nav">
+            <div class="logo">
+                <h1>🔥 Floo</h1>
+            </div>
+            <Menu Mode="MenuMode.Horizontal">
+                <MenuItem RouterMatch="@NavLinkMatch.All" RouterLink="/">首页</MenuItem>
+                <MenuItem RouterMatch="@NavLinkMatch.Prefix" RouterLink="/fetchdata">fetchdata</MenuItem>
+                <MenuItem RouterMatch="@NavLinkMatch.Prefix" RouterLink="/special-columns">专栏</MenuItem>
+            </Menu>
+            <UserProfileNav />
         </div>
-        <Menu Mode="MenuMode.Horizontal">
-            <MenuItem RouterMatch="@NavLinkMatch.All" RouterLink="/">首页</MenuItem>
-            <MenuItem RouterMatch="@NavLinkMatch.Prefix" RouterLink="/fetchdata">fetchdata</MenuItem>
-            <MenuItem RouterMatch="@NavLinkMatch.Prefix" RouterLink="/special-columns">专栏</MenuItem>
-        </Menu>
-      </div>
     </Header>
     <Content Class="site-layout-content">
         @Body

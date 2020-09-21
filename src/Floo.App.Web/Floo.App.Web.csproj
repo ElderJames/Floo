@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AntDesign" Version="0.4.0-*" />
+    <PackageReference Include="AntDesign" Version="0.4.0-nightly-2009210930" />
     <PackageReference Include="IdentityModel" Version="5.0.0-preview.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.0-rc.1.20451.17" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="5.0.0-rc.1.20451.17" PrivateAssets="all" />
@@ -50,6 +50,16 @@
   <ItemGroup>
     <Watch Include="**\*.razor" />
     <Watch Include="**\*.less" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Watch Remove="Components\UserProfileNav.razor.less" />
+    <Watch Remove="styles\HeaderDropdown.less" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Components\NoticeIcon\NoticeIcon.razor" />
+    <None Include="Components\NoticeIcon\NoticeList.razor" />
   </ItemGroup>
 
 </Project>

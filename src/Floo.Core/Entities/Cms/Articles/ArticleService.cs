@@ -31,6 +31,11 @@ namespace Floo.Core.Entities.Cms.Articles
 
         public async Task<ListResult<ArticleDto>> QueryListAsync(ArticleQuery query)
         {
+            if (query.OrderBy == null && query.OrderByDesc == null)
+            {
+                query.OrderByDesc = new[] { nameof(IEntity.CreatedAtUtc) };
+            }
+
             var result = await _articleStorage.QueryAsync(query, linq =>
             {
                 linq = linq.Where(x => x.ChannelId == query.ChannelId)

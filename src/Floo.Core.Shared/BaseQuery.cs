@@ -12,8 +12,8 @@ namespace Floo.Core.Shared
 
         public int Offset { get; set; } = 0;
 
-        public IEnumerable<string> OrderBy { get; set; } = Enumerable.Empty<string>();
+        public IEnumerable<string> OrderBy { get; set; } 
 
-        public IEnumerable<string> OrderByDesc { get; set; } = Enumerable.Empty<string>();
+        public IEnumerable<string> OrderByDesc { get; set; }
     }
 }

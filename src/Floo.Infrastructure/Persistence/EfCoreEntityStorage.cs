@@ -82,14 +82,14 @@ namespace Floo.Infrastructure.Persistence
                 result.Count = await linq.CountAsync();
             }
 
-            if (query.OrderBy.Any())
+            if (query.OrderBy != null && query.OrderBy.Any())
             {
                 foreach (var propertyName in query.OrderBy)
                 {
                     linq = Sort(linq, propertyName, false) ?? linq;
                 }
             }
-            else if (query.OrderByDesc.Any())
+            else if (query.OrderByDesc != null && query.OrderByDesc.Any())
             {
                 foreach (var propertyName in query.OrderByDesc)
                 {
