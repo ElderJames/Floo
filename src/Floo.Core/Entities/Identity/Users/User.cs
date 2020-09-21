@@ -2,7 +2,7 @@ using Floo.Core.Shared;
 using Microsoft.AspNetCore.Identity;
 using System;
 
-namespace Floo.Core.Entities.Identity
+namespace Floo.Core.Entities.Identity.Users
 {
     public class User : IdentityUser<long>, IEntity<long>
     {

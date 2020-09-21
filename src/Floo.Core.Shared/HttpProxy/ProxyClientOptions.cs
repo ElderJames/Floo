@@ -12,6 +12,8 @@ namespace Floo.Core.Shared.HttpProxy
 
         public TimeSpan[] RetrySleepDurations { get; set; }
 
+        public string ClientName { get; set; }
+
         public Func<Type, bool> Filter { get; set; }
 
         public ProxyClientOptions()

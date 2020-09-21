@@ -25,9 +25,9 @@ namespace Microsoft.Extensions.DependencyInjection
                     var factory = sp.GetService<IHttpClientFactory>();
                     var httpContextAccessor = sp.GetService<IHttpContextAccessor>();
                     if (httpContextAccessor == null)
-                        return HttpClientProxyGenerator.Create(type, factory.CreateClient(options.RequestHost));
+                        return HttpClientProxyGenerator.Create(type, factory.CreateClient(options.ClientName?? options.RequestHost));
                     else
-                        return HttpClientProxyGenerator.Create(type, factory.CreateClient(options.RequestHost), httpContextAccessor);
+                        return HttpClientProxyGenerator.Create(type, factory.CreateClient(options.ClientName ?? options.RequestHost), httpContextAccessor);
                 });
 
             return httpClientBuilder;

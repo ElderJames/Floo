@@ -1,4 +1,6 @@
+using Floo.App.Server;
 using Floo.App.Shared;
+using Floo.Core.Shared;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,12 +25,15 @@ namespace Floo.App.Web
 
             builder.Services.AddApiAuthorization();
             builder.Services.AddAntDesign();
+            builder.Services.AddScoped<IIdentityContext, IdentityContext>();
+
             builder.Services.AddProxyClient(options =>
             {
+                options.ClientName = "Floo.ServerAPI";
                 options.RequestHost = builder.HostEnvironment.BaseAddress;
                 options.AssemblyString = new[] { typeof(IWeatherForecastService).Assembly.FullName };
-            })
-            ;
+            });
+
 
             await builder.Build().RunAsync();
         }

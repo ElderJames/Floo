@@ -2,7 +2,7 @@
 
 namespace Floo.App.Shared.Cms.Articles
 {
-    public class ArticleDto : BaseDto<long>
+    public class ArticleDto : BaseDto<long?>
     {
         public string Title { get; set; }
 

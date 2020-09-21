@@ -4,6 +4,7 @@ using Floo.Core.Entities.Cms.Comments;
 using Floo.Core.Entities.Cms.SpecialColumns;
 using Floo.Core.Entities.Cms.Tags;
 using Floo.Core.Entities.Identity;
+using Floo.Core.Entities.Identity.Users;
 using Floo.Core.Shared;
 using IdentityServer4.EntityFramework.Entities;
 using IdentityServer4.EntityFramework.Extensions;
@@ -23,7 +24,7 @@ namespace Floo.Infrastructure.Persistence
     public class ApplicationDbContext : IdentityDbContext<User, Role, long, Core.Entities.Identity.UserClaim, UserRole, UserLogin, RoleClaim, UserToken>, IPersistedGrantDbContext, IDbContext
     {
         private readonly IOptions<OperationalStoreOptions> _operationalStoreOptions;
-        private IIdentityContext _identityContext;
+        private readonly IIdentityContext _identityContext;
 
         public ApplicationDbContext(
              IOptions<OperationalStoreOptions> operationalStoreOptions,
