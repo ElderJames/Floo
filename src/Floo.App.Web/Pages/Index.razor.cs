@@ -1,8 +1,8 @@
 ﻿using Floo.App.Shared.Cms.Articles;
+using Floo.App.Web.Utils;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Floo.App.Web.Pages
@@ -14,7 +14,9 @@ namespace Floo.App.Web.Pages
 
         [Inject] public IArticleService ArticleService { get; set; }
 
-        private List<ArticleDto> _articleList = new List<ArticleDto>();
+        [Inject] public PreFetchedState PreFetchedState { get; set; }
+
+        private List<ArticleDto> _articleList;
 
         private int _pageIndex = 1;
 
@@ -23,27 +25,26 @@ namespace Floo.App.Web.Pages
         protected override async Task OnInitializedAsync()
         {
             await GetArticles();
-           
         }
 
         private async Task GetArticles()
         {
-            var articleResult = await ArticleService.QueryListAsync(articleQuery);
-            if (articleResult.Items.Any())
+            var key = "home-articleList";
+            if (_articleList == null)
             {
-                _articleList.AddRange(articleResult.Items);
+                _articleList = await PreFetchedState.GetAsync<List<ArticleDto>>(key);
             }
-        }
-
-        private async Task CreateArticle()
-        {
-            await ArticleService.CreateAsync(new ArticleDto
+            if (_articleList == null)
             {
-                Title = "文章1",
-                Summary= "文章1文章1文章1文章1文章1文章1文章1文章1文章1",
-                Cover= "https://picb.zhimg.com/v2-320009747fc474ccd71dbd87e5767b64_1440w.jpg?source=172ae18b",
-                Slug="wenzhang1"
-            });
+                _articleList = new List<ArticleDto>();
+                var articleResult = await ArticleService.QueryListAsync(articleQuery);
+                if (articleResult.Items.Any())
+                {
+                    _articleList.AddRange(articleResult.Items);
+
+                    PreFetchedState.Save(key, _articleList);
+                }
+            }
         }
     }
 }

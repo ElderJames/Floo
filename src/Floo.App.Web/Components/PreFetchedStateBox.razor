@@ -1,0 +1,35 @@
+﻿@using Floo.App.Web.Utils
+@inherits ComponentBase
+
+@foreach (var item in _states)
+{
+    <input id="@item.Key" value="@item.Value" @key="item.Key" type="hidden" />
+}
+
+@inject PreFetchedState PreFetchedState
+
+@code {
+    IDictionary<string, string> _states;
+
+    protected override void OnInitialized()
+    {
+        PreFetchedState.StateChanged += Refresh;
+
+        base.OnInitialized();
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            PreFetchedState.HasRender();
+        }
+        base.OnAfterRender(firstRender);
+    }
+
+    private void Refresh(IDictionary<string, string> states)
+    {
+        this._states = states;
+    }
+
+}

@@ -1,5 +1,6 @@
 using Floo.App.Shared;
 using Floo.App.Shared.Cms.Articles;
+using Floo.App.Web.Utils;
 using Floo.Core.Entities.Cms.Articles;
 using Floo.Core.Entities.Identity;
 using Floo.Core.Entities.Identity.Users;
@@ -66,6 +67,7 @@ namespace Floo.App.Server
             services.AddScoped<SignOutSessionStateManager>();
 
             services.AddFlooEntityStorage<ApplicationDbContext>();
+            services.AddScoped<PreFetchedState>();
 
             services.AddAntDesign();
 

@@ -1,5 +1,6 @@
 using Floo.App.Server;
 using Floo.App.Shared;
+using Floo.App.Web.Utils;
 using Floo.Core.Shared;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -26,6 +27,7 @@ namespace Floo.App.Web
             builder.Services.AddApiAuthorization();
             builder.Services.AddAntDesign();
             builder.Services.AddScoped<IIdentityContext, IdentityContext>();
+            builder.Services.AddScoped<PreFetchedState>();
 
             builder.Services.AddProxyClient(options =>
             {

@@ -2,8 +2,10 @@
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using Floo.App.Shared
+@using Floo.App.Web.Utils;
+
 @attribute [Authorize]
-@inject IWeatherForecastService service;
+
 
 <h1>Weather forecast</h1>
 
@@ -38,6 +40,8 @@ else
     </table>
 }
 
+@inject IWeatherForecastService service;
+@inject PreFetchedState PreFetchedState;
 @code {
     private WeatherForecast[] forecasts;
 
@@ -45,7 +49,12 @@ else
     {
         try
         {
-            forecasts = (await service.GetWeatherForecasts()).ToArray();
+            forecasts = await PreFetchedState.GetAsync<WeatherForecast[]>("home-wetherlist");
+            if (forecasts == null)
+            {
+                forecasts = (await service.GetWeatherForecasts()).ToArray();
+                PreFetchedState.Save("home-wetherlist", forecasts);
+            }
         }
         catch (AccessTokenNotAvailableException exception)
         {
