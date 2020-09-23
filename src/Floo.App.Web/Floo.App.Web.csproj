@@ -52,14 +52,4 @@
     <Watch Include="**\*.less" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Watch Remove="Components\UserProfileNav.razor.less" />
-    <Watch Remove="styles\HeaderDropdown.less" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Components\NoticeIcon\NoticeIcon.razor" />
-    <None Include="Components\NoticeIcon\NoticeList.razor" />
-  </ItemGroup>
-
 </Project>

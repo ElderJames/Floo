@@ -1,13 +1,8 @@
 ﻿using Floo.Core.Shared;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Floo.Core.Entities.Cms.SpecialColumns
 {
-    public class SpecialColumn : BaseEntity
+    public class Column : BaseEntity
     {
         public string Cover { get; set; }
 

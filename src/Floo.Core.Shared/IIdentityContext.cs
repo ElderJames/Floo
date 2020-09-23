@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace Floo.Core.Shared
 {
@@ -11,5 +7,11 @@ namespace Floo.Core.Shared
         long? UserId { get; }
 
         string UserName { get; }
+
+        string NickName { get; }
+
+        string Avatar { get; }
+
+        Task GetState();
     }
 }

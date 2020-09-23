@@ -8,6 +8,6 @@ namespace Floo.App.Shared.Identity.User
 {
     public interface IUserService
     {
-        public Task<UserDto> GetByUserName(string userName); 
+        public Task<UserDto> FindByNameAsync(string userName); 
     }
 }

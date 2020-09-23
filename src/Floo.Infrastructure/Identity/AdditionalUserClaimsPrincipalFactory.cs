@@ -27,8 +27,11 @@ namespace Floo.Infrastructure.Identity
 			var claims = new List<Claim>();
 
             claims.Add(new Claim(JwtClaimTypes.Name, user.UserName));
+			claims.Add(new Claim(JwtClaimTypes.NickName, user.NickName));
+			claims.Add(new Claim(JwtClaimTypes.Picture, user.Avatar));
 
-            identity.AddClaims(claims);
+
+			identity.AddClaims(claims);
 			return principal;
 		}
 	}

@@ -1,10 +1,10 @@
 ﻿@namespace Floo.App.Web.Components
 
-<AntList DataSource="@Articles" ItemLayout="@ListItemLayout.Vertical" Class="article-list">
-    <ListItem Class="article-list-item" Actions="@(new[] {LikeButtons(3), IconText(("star", "156")), IconText(("like", "156")), IconText(("message", "2")) })">
+<AntList DataSource="@Contents" ItemLayout="@ListItemLayout.Vertical" Class="content-list">
+    <ListItem Class="content-list-item" Actions="@(new[] {LikeButtons(3), IconText(("star", "156")), IconText(("like", "156")), IconText(("message", "2")) })">
         <h1>@context.Title</h1>
-        <div class="article-content">
-            <div class="article-cover">
+        <div class="content-content">
+            <div class="content-cover">
                 <img src="@context.Cover" />
             </div>
             @context.Contnet
@@ -24,7 +24,7 @@
 
     RenderFragment<int> LikeButtons = likes =>
     @<Template>
-        <Space Class="article-like-button">
+        <Space Class="content-like-button">
             <SpaceItem><Button Icon="caret-up">赞同 96</Button></SpaceItem>
             <SpaceItem><Button Icon="caret-down"></Button></SpaceItem>
         </Space>

@@ -17,7 +17,7 @@ namespace Floo.Core.Entities.Identity.Users
             _userStorage = userStorage;
         }
 
-        public async Task<UserDto> GetByUserName(string userName)
+        public async Task<UserDto> FindByNameAsync(string userName)
         {
             var user = await _userManager.FindByNameAsync(userName);
             return Mapper.Map<User, UserDto>(user);

@@ -6,6 +6,10 @@ namespace Floo.Core.Entities.Identity.Users
 {
     public class User : IdentityUser<long>, IEntity<long>
     {
+        public string NickName { get; set; }
+
+        public string Avatar { get; set; }
+
         public long CreatedBy { get; set; }
 
         public long UpdatedBy { get; set; }

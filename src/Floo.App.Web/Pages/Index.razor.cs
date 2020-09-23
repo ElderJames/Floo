@@ -1,4 +1,4 @@
-﻿using Floo.App.Shared.Cms.Articles;
+﻿using Floo.App.Shared.Cms.Contents;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,32 +12,32 @@ namespace Floo.App.Web.Pages
         [Parameter]
         public string ChannelName { get; set; }
 
-        [Inject] public IArticleService ArticleService { get; set; }
+        [Inject] public IContentService ContentService { get; set; }
 
-        private List<ArticleDto> _articleList = new List<ArticleDto>();
+        private List<ContentDto> _ContentList = new List<ContentDto>();
 
         private int _pageIndex = 1;
 
-        private ArticleQuery articleQuery = new ArticleQuery();
+        private ContentQuery ContentQuery = new ContentQuery();
 
         protected override async Task OnInitializedAsync()
         {
-            await GetArticles();
+            await GetContents();
            
         }
 
-        private async Task GetArticles()
+        private async Task GetContents()
         {
-            var articleResult = await ArticleService.QueryListAsync(articleQuery);
-            if (articleResult.Items.Any())
+            var ContentResult = await ContentService.QueryListAsync(ContentQuery);
+            if (ContentResult.Items.Any())
             {
-                _articleList.AddRange(articleResult.Items);
+                _ContentList.AddRange(ContentResult.Items);
             }
         }
 
-        private async Task CreateArticle()
+        private async Task CreateContent()
         {
-            await ArticleService.CreateAsync(new ArticleDto
+            await ContentService.CreateAsync(new ContentDto
             {
                 Title = "文章1",
                 Summary= "文章1文章1文章1文章1文章1文章1文章1文章1文章1",
