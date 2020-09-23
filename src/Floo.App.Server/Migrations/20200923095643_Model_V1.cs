@@ -358,7 +358,7 @@ namespace Floo.App.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Question",
+                name: "Questions",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -374,9 +374,9 @@ namespace Floo.App.Server.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Question", x => x.Id);
+                    table.PrimaryKey("PK_Questions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Question_Contents_ContentId",
+                        name: "FK_Questions_Contents_ContentId",
                         column: x => x.ContentId,
                         principalTable: "Contents",
                         principalColumn: "Id",
@@ -384,7 +384,7 @@ namespace Floo.App.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Article",
+                name: "Articles",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -405,40 +405,81 @@ namespace Floo.App.Server.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Article", x => x.Id);
+                    table.PrimaryKey("PK_Articles", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Article_Channels_ChannelId",
+                        name: "FK_Articles_Channels_ChannelId",
                         column: x => x.ChannelId,
                         principalTable: "Channels",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Article_Columns_ColumnId",
+                        name: "FK_Articles_Columns_ColumnId",
                         column: x => x.ColumnId,
                         principalTable: "Columns",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Article_Contents_ContnetId",
+                        name: "FK_Articles_Contents_ContnetId",
                         column: x => x.ContnetId,
                         principalTable: "Contents",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Answers",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    QuestionId = table.Column<long>(type: "bigint", nullable: true),
+                    ContentId = table.Column<long>(type: "bigint", nullable: true),
+                    CreatedBy = table.Column<long>(type: "bigint", nullable: false),
+                    UpdatedBy = table.Column<long>(type: "bigint", nullable: false),
+                    Deleted = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedAtUtc = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAtUtc = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Answers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Answers_Contents_ContentId",
+                        column: x => x.ContentId,
+                        principalTable: "Contents",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Answers_Questions_QuestionId",
+                        column: x => x.QuestionId,
+                        principalTable: "Questions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
-                name: "IX_Article_ChannelId",
-                table: "Article",
+                name: "IX_Answers_ContentId",
+                table: "Answers",
+                column: "ContentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Answers_QuestionId",
+                table: "Answers",
+                column: "QuestionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Articles_ChannelId",
+                table: "Articles",
                 column: "ChannelId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Article_ColumnId",
-                table: "Article",
+                name: "IX_Articles_ColumnId",
+                table: "Articles",
                 column: "ColumnId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Article_ContnetId",
-                table: "Article",
+                name: "IX_Articles_ContnetId",
+                table: "Articles",
                 column: "ContnetId",
                 unique: true);
 
@@ -533,8 +574,8 @@ namespace Floo.App.Server.Migrations
                 columns: new[] { "SubjectId", "SessionId", "Type" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Question_ContentId",
-                table: "Question",
+                name: "IX_Questions_ContentId",
+                table: "Questions",
                 column: "ContentId",
                 unique: true);
         }
@@ -542,7 +583,10 @@ namespace Floo.App.Server.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Article");
+                name: "Answers");
+
+            migrationBuilder.DropTable(
+                name: "Articles");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
@@ -572,7 +616,7 @@ namespace Floo.App.Server.Migrations
                 name: "PersistedGrants");
 
             migrationBuilder.DropTable(
-                name: "Question");
+                name: "Questions");
 
             migrationBuilder.DropTable(
                 name: "Channels");

@@ -34,6 +34,43 @@ namespace Floo.App.Server.Migrations
                     b.ToTable("ContentTag");
                 });
 
+            modelBuilder.Entity("Floo.Core.Entities.Cms.Answers.Answer", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
+
+                    b.Property<long?>("ContentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("CreatedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("CreatedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("bit");
+
+                    b.Property<long?>("QuestionId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("UpdatedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("UpdatedBy")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContentId");
+
+                    b.HasIndex("QuestionId");
+
+                    b.ToTable("Answers");
+                });
+
             modelBuilder.Entity("Floo.Core.Entities.Cms.Articles.Article", b =>
                 {
                     b.Property<long>("Id")
@@ -89,7 +126,7 @@ namespace Floo.App.Server.Migrations
                     b.HasIndex("ContnetId")
                         .IsUnique();
 
-                    b.ToTable("Article");
+                    b.ToTable("Articles");
                 });
 
             modelBuilder.Entity("Floo.Core.Entities.Cms.Channels.Channel", b =>
@@ -245,7 +282,7 @@ namespace Floo.App.Server.Migrations
                     b.HasIndex("ContentId")
                         .IsUnique();
 
-                    b.ToTable("Question");
+                    b.ToTable("Questions");
                 });
 
             modelBuilder.Entity("Floo.Core.Entities.Cms.SpecialColumns.Column", b =>
@@ -684,6 +721,21 @@ namespace Floo.App.Server.Migrations
                         .HasForeignKey("TagsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Floo.Core.Entities.Cms.Answers.Answer", b =>
+                {
+                    b.HasOne("Floo.Core.Entities.Cms.Contents.Content", "Content")
+                        .WithMany()
+                        .HasForeignKey("ContentId");
+
+                    b.HasOne("Floo.Core.Entities.Cms.Questions.Question", "Question")
+                        .WithMany()
+                        .HasForeignKey("QuestionId");
+
+                    b.Navigation("Content");
+
+                    b.Navigation("Question");
                 });
 
             modelBuilder.Entity("Floo.Core.Entities.Cms.Articles.Article", b =>

@@ -3,6 +3,9 @@ using Floo.Core.Entities.Cms.Channels;
 using Floo.Core.Entities.Cms.Comments;
 using Floo.Core.Entities.Cms.SpecialColumns;
 using Floo.Core.Entities.Cms.Tags;
+using Floo.Core.Entities.Cms.Answers;
+using Floo.Core.Entities.Cms.Articles;
+using Floo.Core.Entities.Cms.Questions;
 using Floo.Core.Entities.Identity;
 using Floo.Core.Entities.Identity.Users;
 using Floo.Core.Shared;
@@ -56,6 +59,9 @@ namespace Floo.Infrastructure.Persistence
             SetEntity<Comment>(builder).ToTable("Comments");
             SetEntity<Tag>(builder).ToTable("Tags");
             SetEntity<Column>(builder).ToTable("Columns");
+            SetEntity<Answer>(builder).ToTable("Answers");
+            SetEntity<Article>(builder).ToTable("Articles");
+            SetEntity<Question>(builder).ToTable("Questions");
 
             base.OnModelCreating(builder);
 
