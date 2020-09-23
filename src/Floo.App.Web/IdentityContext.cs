@@ -20,31 +20,21 @@ namespace Floo.App.Server
         {
             _authenticationStateProvider = authenticationStateProvider;
             _authenticationStateProvider.AuthenticationStateChanged += async (t) => await GetState();
-
-            GetState().Wait();
         }
 
-        private async Task GetState()
+        public async Task GetState()
         {
             var userState = await _authenticationStateProvider.GetAuthenticationStateAsync();
             _claimsPrincipal = userState.User;
         }
 
-        public virtual long? UserId
-        {
-            get
-            {
-                return this.GetClaimValueAsLong(_claimsPrincipal, JwtClaimTypes.Subject);
-            }
-        }
+        public virtual long? UserId=> this.GetClaimValueAsLong(_claimsPrincipal, JwtClaimTypes.Subject);
 
-        public virtual string UserName
-        {
-            get
-            {
-                return this.GetClaimValue(_claimsPrincipal,JwtClaimTypes.Name);
-            }
-        }
+        public virtual string UserName=> this.GetClaimValue(_claimsPrincipal, JwtClaimTypes.Name);
+
+        public string NickName => this.GetClaimValue(_claimsPrincipal, JwtClaimTypes.NickName);
+
+        public string Avatar => this.GetClaimValue(_claimsPrincipal, JwtClaimTypes.Picture);
 
         private string GetClaimValue(ClaimsPrincipal user, string claimType)
         {

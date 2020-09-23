@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Floo.App.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200915054325_InitialProject")]
-    partial class InitialProject
+    [Migration("20200923092041_Model_V1")]
+    partial class Model_V1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,6 +21,21 @@ namespace Floo.App.Server.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.0-rc.1.20451.13");
 
+            modelBuilder.Entity("ContentTag", b =>
+                {
+                    b.Property<long>("ContentsId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("TagsId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("ContentsId", "TagsId");
+
+                    b.HasIndex("TagsId");
+
+                    b.ToTable("ContentTag");
+                });
+
             modelBuilder.Entity("Floo.Core.Entities.Cms.Articles.Article", b =>
                 {
                     b.Property<long>("Id")
@@ -28,11 +43,14 @@ namespace Floo.App.Server.Migrations
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
 
-                    b.Property<long?>("ChannelId")
+                    b.Property<long>("ChannelId")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("Contnet")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long?>("ColumnId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ContnetId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Cover")
                         .HasColumnType("nvarchar(max)");
@@ -52,9 +70,6 @@ namespace Floo.App.Server.Migrations
                     b.Property<string>("Source")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("SpecialColumnId")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("Summary")
                         .HasColumnType("nvarchar(max)");
 
@@ -68,6 +83,13 @@ namespace Floo.App.Server.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ChannelId");
+
+                    b.HasIndex("ColumnId");
+
+                    b.HasIndex("ContnetId")
+                        .IsUnique();
 
                     b.ToTable("Article");
                 });
@@ -108,7 +130,7 @@ namespace Floo.App.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Channel");
+                    b.ToTable("Channels");
                 });
 
             modelBuilder.Entity("Floo.Core.Entities.Cms.Comments.Comment", b =>
@@ -118,11 +140,11 @@ namespace Floo.App.Server.Migrations
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
 
-                    b.Property<long?>("ArticleId")
+                    b.Property<long?>("CommentId")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("Content")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long?>("ContentId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime?>("CreatedAtUtc")
                         .HasColumnType("datetime2");
@@ -133,8 +155,8 @@ namespace Floo.App.Server.Migrations
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit");
 
-                    b.Property<long?>("ReplyId")
-                        .HasColumnType("bigint");
+                    b.Property<string>("Text")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedAtUtc")
                         .HasColumnType("datetime2");
@@ -144,15 +166,99 @@ namespace Floo.App.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Comment");
+                    b.HasIndex("CommentId");
+
+                    b.HasIndex("ContentId");
+
+                    b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("Floo.Core.Entities.Cms.SpecialColumns.SpecialColumn", b =>
+            modelBuilder.Entity("Floo.Core.Entities.Cms.Contents.Content", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
+
+                    b.Property<long?>("AuthorId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("CreatedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("CreatedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("UpdatedBy")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.ToTable("Contents");
+                });
+
+            modelBuilder.Entity("Floo.Core.Entities.Cms.Questions.Question", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
+
+                    b.Property<long>("ContentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("CreatedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("CreatedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Slug")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("UpdatedBy")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContentId")
+                        .IsUnique();
+
+                    b.ToTable("Question");
+                });
+
+            modelBuilder.Entity("Floo.Core.Entities.Cms.SpecialColumns.Column", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
+
+                    b.Property<long?>("ContentId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Cover")
                         .HasColumnType("nvarchar(max)");
@@ -183,7 +289,9 @@ namespace Floo.App.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SpecialColumn");
+                    b.HasIndex("ContentId");
+
+                    b.ToTable("Columns");
                 });
 
             modelBuilder.Entity("Floo.Core.Entities.Cms.Tags.Tag", b =>
@@ -222,7 +330,7 @@ namespace Floo.App.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tag");
+                    b.ToTable("Tags");
                 });
 
             modelBuilder.Entity("Floo.Core.Entities.Identity.Role", b =>
@@ -290,88 +398,6 @@ namespace Floo.App.Server.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetRoleClaims");
-                });
-
-            modelBuilder.Entity("Floo.Core.Entities.Identity.User", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("CreatedAtUtc")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long>("CreatedBy")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("UpdatedAtUtc")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long>("UpdatedBy")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers");
                 });
 
             modelBuilder.Entity("Floo.Core.Entities.Identity.UserClaim", b =>
@@ -454,6 +480,94 @@ namespace Floo.App.Server.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("Floo.Core.Entities.Identity.Users.User", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Avatar")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreatedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("CreatedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NickName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("UpdatedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("UpdatedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers");
                 });
 
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.DeviceFlowCodes", b =>
@@ -559,6 +673,88 @@ namespace Floo.App.Server.Migrations
                     b.ToTable("PersistedGrants");
                 });
 
+            modelBuilder.Entity("ContentTag", b =>
+                {
+                    b.HasOne("Floo.Core.Entities.Cms.Contents.Content", null)
+                        .WithMany()
+                        .HasForeignKey("ContentsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Floo.Core.Entities.Cms.Tags.Tag", null)
+                        .WithMany()
+                        .HasForeignKey("TagsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Floo.Core.Entities.Cms.Articles.Article", b =>
+                {
+                    b.HasOne("Floo.Core.Entities.Cms.Channels.Channel", "Channel")
+                        .WithMany()
+                        .HasForeignKey("ChannelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Floo.Core.Entities.Cms.SpecialColumns.Column", "Column")
+                        .WithMany()
+                        .HasForeignKey("ColumnId");
+
+                    b.HasOne("Floo.Core.Entities.Cms.Contents.Content", "Contnet")
+                        .WithOne("Article")
+                        .HasForeignKey("Floo.Core.Entities.Cms.Articles.Article", "ContnetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Channel");
+
+                    b.Navigation("Column");
+
+                    b.Navigation("Contnet");
+                });
+
+            modelBuilder.Entity("Floo.Core.Entities.Cms.Comments.Comment", b =>
+                {
+                    b.HasOne("Floo.Core.Entities.Cms.Comments.Comment", "Parent")
+                        .WithMany()
+                        .HasForeignKey("CommentId");
+
+                    b.HasOne("Floo.Core.Entities.Cms.Contents.Content", "Content")
+                        .WithMany("Comments")
+                        .HasForeignKey("ContentId");
+
+                    b.Navigation("Content");
+
+                    b.Navigation("Parent");
+                });
+
+            modelBuilder.Entity("Floo.Core.Entities.Cms.Contents.Content", b =>
+                {
+                    b.HasOne("Floo.Core.Entities.Identity.Users.User", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorId");
+
+                    b.Navigation("Author");
+                });
+
+            modelBuilder.Entity("Floo.Core.Entities.Cms.Questions.Question", b =>
+                {
+                    b.HasOne("Floo.Core.Entities.Cms.Contents.Content", "Content")
+                        .WithOne("Question")
+                        .HasForeignKey("Floo.Core.Entities.Cms.Questions.Question", "ContentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Content");
+                });
+
+            modelBuilder.Entity("Floo.Core.Entities.Cms.SpecialColumns.Column", b =>
+                {
+                    b.HasOne("Floo.Core.Entities.Cms.Contents.Content", null)
+                        .WithMany("Columns")
+                        .HasForeignKey("ContentId");
+                });
+
             modelBuilder.Entity("Floo.Core.Entities.Identity.RoleClaim", b =>
                 {
                     b.HasOne("Floo.Core.Entities.Identity.Role", null)
@@ -570,7 +766,7 @@ namespace Floo.App.Server.Migrations
 
             modelBuilder.Entity("Floo.Core.Entities.Identity.UserClaim", b =>
                 {
-                    b.HasOne("Floo.Core.Entities.Identity.User", null)
+                    b.HasOne("Floo.Core.Entities.Identity.Users.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -579,7 +775,7 @@ namespace Floo.App.Server.Migrations
 
             modelBuilder.Entity("Floo.Core.Entities.Identity.UserLogin", b =>
                 {
-                    b.HasOne("Floo.Core.Entities.Identity.User", null)
+                    b.HasOne("Floo.Core.Entities.Identity.Users.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -594,7 +790,7 @@ namespace Floo.App.Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Floo.Core.Entities.Identity.User", null)
+                    b.HasOne("Floo.Core.Entities.Identity.Users.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -603,11 +799,22 @@ namespace Floo.App.Server.Migrations
 
             modelBuilder.Entity("Floo.Core.Entities.Identity.UserToken", b =>
                 {
-                    b.HasOne("Floo.Core.Entities.Identity.User", null)
+                    b.HasOne("Floo.Core.Entities.Identity.Users.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Floo.Core.Entities.Cms.Contents.Content", b =>
+                {
+                    b.Navigation("Article");
+
+                    b.Navigation("Columns");
+
+                    b.Navigation("Comments");
+
+                    b.Navigation("Question");
                 });
 #pragma warning restore 612, 618
         }

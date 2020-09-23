@@ -2,26 +2,17 @@
 using IdentityModel;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
-using System.Security.Principal;
+using System.Threading.Tasks;
 
 namespace Floo.Infrastructure
 {
     public class IdentityContext : IIdentityContext
     {
         public static readonly IdentityContext Empty = new IdentityContext();
-        private long? userId;
-        private string userName;
-
-        private IPrincipal User { get; }
+        private readonly ClaimsPrincipal User;
 
         public IdentityContext()
         {
-        }
-
-        public IdentityContext(long? userId, string userName)
-        {
-            this.userId = userId;
-            this.userName = userName;
         }
 
         public IdentityContext(IHttpContextAccessor httpContextAccessor)
@@ -29,29 +20,13 @@ namespace Floo.Infrastructure
             User = httpContextAccessor.HttpContext?.User;
         }
 
-        public virtual long? UserId
-        {
-            get
-            {
-                if (!userId.HasValue && User != null && User is ClaimsPrincipal user)
-                {
-                    userId = this.GetClaimValueAsLong(user, ClaimTypes.NameIdentifier);
-                }
-                return userId;
-            }
-        }
+        public virtual long? UserId => this.GetClaimValueAsLong(User, ClaimTypes.NameIdentifier);
 
-        public virtual string UserName
-        {
-            get
-            {
-                if (string.IsNullOrWhiteSpace(userName) && User != null && User is ClaimsPrincipal user)
-                {
-                    userName = this.GetClaimValue(user, JwtClaimTypes.Name);
-                }
-                return userName;
-            }
-        }
+        public virtual string UserName => this.GetClaimValue(User, JwtClaimTypes.Name);
+
+        public string NickName => this.GetClaimValue(User, JwtClaimTypes.NickName);
+
+        public string Avatar => this.GetClaimValue(User, JwtClaimTypes.Picture);
 
         private string GetClaimValue(ClaimsPrincipal user, string claimType)
         {
@@ -73,6 +48,11 @@ namespace Floo.Infrastructure
             }
 
             return value;
+        }
+
+        public Task GetState()
+        {
+            return Task.CompletedTask;
         }
     }
 }

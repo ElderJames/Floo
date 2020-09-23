@@ -1,4 +1,4 @@
-﻿using Floo.Core.Entities.Cms.Articles;
+﻿using Floo.Core.Entities.Cms.Contents;
 using Floo.Core.Entities.Cms.Channels;
 using Floo.Core.Entities.Cms.Comments;
 using Floo.Core.Entities.Cms.SpecialColumns;
@@ -18,6 +18,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Floo.Infrastructure.Persistence
 {
@@ -50,13 +51,15 @@ namespace Floo.Infrastructure.Persistence
         /// <inheritdoc />
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            SetEntity<Article>(builder);
-            SetEntity<Channel>(builder);
-            SetEntity<Comment>(builder);
-            SetEntity<Tag>(builder);
-            SetEntity<SpecialColumn>(builder);
+            SetEntity<Content>(builder).ToTable("Contents") ;
+            SetEntity<Channel>(builder).ToTable("Channels");
+            SetEntity<Comment>(builder).ToTable("Comments");
+            SetEntity<Tag>(builder).ToTable("Tags");
+            SetEntity<Column>(builder).ToTable("Columns");
 
             base.OnModelCreating(builder);
+
+
             builder.ConfigurePersistedGrantContext(_operationalStoreOptions.Value);
         }
 
@@ -74,12 +77,14 @@ namespace Floo.Infrastructure.Persistence
             return base.SaveChanges();
         }
 
-        private void SetEntity<TEntity>(ModelBuilder builder)
+        private EntityTypeBuilder<TEntity> SetEntity<TEntity>(ModelBuilder builder)
             where TEntity : class, IEntity<long>
         {
             var entityBuilder = builder.Entity<TEntity>();
             entityBuilder.HasKey(_ => _.Id);
             entityBuilder.HasQueryFilter(_ => !_.Deleted);
+
+            return entityBuilder;
         }
 
         private void UpdateUpdatedProperty()
