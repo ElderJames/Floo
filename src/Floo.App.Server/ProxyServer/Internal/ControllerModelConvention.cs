@@ -23,7 +23,7 @@ namespace Floo.App.Server.ProxyServer.Internal
         {
             if (!serviceType.IsAssignableFrom(controller.ControllerType)) return;
 
-            var attrs = serviceType.GetCustomAttributes();
+            var attrs = controller.ControllerType.GetCustomAttributes();
             var controllerAttrs = new List<object>();
 
             foreach (var att in attrs)

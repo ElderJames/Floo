@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Floo.Core.Shared
+namespace Floo.App.Shared
 {
     public class BaseQuery
     {

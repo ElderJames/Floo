@@ -1,11 +1,9 @@
 ﻿using System;
 
-namespace Floo.Core.Shared
+namespace Floo.Core
 {
-    public abstract class BaseEntity : IEntity<long>
+    public interface IEntity
     {
-        public long Id { get; set; }
-
         public long CreatedBy { get; set; }
 
         public long UpdatedBy { get; set; }
@@ -15,5 +13,10 @@ namespace Floo.Core.Shared
         public DateTime? CreatedAtUtc { get; set; }
 
         public DateTime? UpdatedAtUtc { get; set; }
+    }
+
+    public interface IEntity<TKey> : IEntity
+    {
+        public TKey Id { get; set; }
     }
 }

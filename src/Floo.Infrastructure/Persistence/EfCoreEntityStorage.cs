@@ -1,4 +1,6 @@
-﻿using Floo.Core.Shared;
+﻿using Floo.App.Shared;
+using Floo.Core;
+using Floo.Core.Shared;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;

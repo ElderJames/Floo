@@ -1,4 +1,4 @@
-﻿using Floo.Core.Shared;
+﻿
 
 namespace Floo.App.Shared.Cms.Articles
 {

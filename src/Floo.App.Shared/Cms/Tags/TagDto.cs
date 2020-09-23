@@ -1,6 +1,4 @@
-﻿using Floo.Core.Shared;
-
-namespace Floo.App.Shared.Cms.Tags
+﻿namespace Floo.App.Shared.Cms.Tags
 {
     public class TagDto : BaseDto<long>
     {

@@ -1,5 +1,5 @@
-﻿using Floo.App.Shared.Cms.Tags;
-using Floo.Core.Shared;
+﻿using Floo.App.Shared;
+using Floo.App.Shared.Cms.Tags;
 using Floo.Core.Shared.Utils;
 using System.Threading;
 using System.Threading.Tasks;

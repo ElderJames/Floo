@@ -1,5 +1,4 @@
-﻿using Floo.Core.Shared;
-
+﻿
 namespace Floo.App.Shared.Cms.Comments
 {
     public class CommentDto : BaseDto<long>
