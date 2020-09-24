@@ -2,6 +2,7 @@
 using Floo.Core.Shared;
 using Floo.Core.Shared.Utils;
 using Microsoft.AspNetCore.Identity;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Floo.Core.Entities.Identity.Users
@@ -15,6 +16,12 @@ namespace Floo.Core.Entities.Identity.Users
         {
             _userManager = userManager;
             _userStorage = userStorage;
+        }
+
+        public async Task<UserDto> FindByIdAsync(long id, CancellationToken cancellation = default)
+        {
+            var user = await _userStorage.FindAsync(cancellation,id);
+            return Mapper.Map<User, UserDto>(user);
         }
 
         public async Task<UserDto> FindByNameAsync(string userName)
