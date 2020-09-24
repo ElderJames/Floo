@@ -1,4 +1,5 @@
-﻿using Floo.Core.Shared;
+﻿using Floo.Core;
+using Floo.Core.Shared;
 using Floo.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;

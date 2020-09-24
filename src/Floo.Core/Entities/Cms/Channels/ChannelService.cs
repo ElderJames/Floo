@@ -1,5 +1,5 @@
-﻿using Floo.App.Shared.Cms.Channels;
-using Floo.Core.Shared;
+﻿using Floo.App.Shared;
+using Floo.App.Shared.Cms.Channels;
 using Floo.Core.Shared.Utils;
 using System.Threading;
 using System.Threading.Tasks;

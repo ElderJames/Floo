@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Floo.Core.Shared
+namespace Floo.App.Shared
 {
     public class ListResult<TDto>
     {

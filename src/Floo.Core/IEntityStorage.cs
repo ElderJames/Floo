@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Floo.App.Shared;
+using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Floo.Core.Shared
+namespace Floo.Core
 {
     public interface IEntityStorage<TEntity>
        where TEntity : class, IEntity

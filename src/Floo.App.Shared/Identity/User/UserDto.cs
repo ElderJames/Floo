@@ -1,6 +1,4 @@
-﻿using Floo.Core.Shared;
-
-namespace Floo.App.Shared.Identity.User
+﻿namespace Floo.App.Shared.Identity.User
 {
     public class UserDto : BaseDto<long>
     {

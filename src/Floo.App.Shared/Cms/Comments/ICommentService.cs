@@ -1,5 +1,4 @@
-﻿using Floo.Core.Shared;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 
 namespace Floo.App.Shared.Cms.Comments

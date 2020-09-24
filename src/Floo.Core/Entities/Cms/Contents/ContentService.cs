@@ -1,5 +1,5 @@
-﻿using Floo.App.Shared.Cms.Contents;
-using Floo.Core.Shared;
+﻿using Floo.App.Shared;
+using Floo.App.Shared.Cms.Contents;
 using Floo.Core.Shared.Utils;
 using System.Linq;
 using System.Threading;
