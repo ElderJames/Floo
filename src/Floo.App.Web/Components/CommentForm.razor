@@ -1,0 +1,24 @@
+﻿@namespace Floo.App.Web.Components
+
+<Form Class="comment-form" Model="@Comment">
+    <Row>
+        <Col>
+        <Input Class="form-control input-control clearfix" Placeholder="姓名 (*)" required="required" Value="@Comment.Content" />
+        </Col>
+        <Col>
+        <Input Type="email" Placeholder="邮箱 (*)" required="required" Class="form-control input-control clearfix" Value="@Comment.Content" />
+        </Col>
+        <Col>
+        <Input Type="url" Placeholder="网址 (http://)" Class="form-control input-control clearfix" Value="@Comment.Content" />
+        </Col>
+    </Row>
+    <Row>
+        <Col>
+        <TextArea Placeholder="客官,留下你的评论." required="required" Class="form-control"></TextArea>
+        <Button Type="button" Class="submit">提交</Button>
+        </Col>
+    </Row>
+</Form>
+
+@code {
+}

@@ -1,18 +1,34 @@
 ﻿@page "/{username}/{slug}"
 @attribute [Microsoft.AspNetCore.Authorization.AllowAnonymous]
 
-<Row>
-    <Col Class="home-article-detail">
-    <Card Title="" Class="content-card">
-        <Body>
-            <p>Card content</p>
-        </Body>
-    </Card>
-    </Col>
-</Row>
-
-
+<Space Direction="vertical" Class="article-detail">
+    <SpaceItem>
+        <Card Title="@_Article.Title" Class="content-card">
+            <Body>
+                <Vditor.Preview Markdown="@_Article.Contnet"></Vditor.Preview>
+            </Body>
+        </Card>
+    </SpaceItem>
+    <SpaceItem>
+        <Card Class="comment-card">
+            <CommentList Comments="@_Comments" />
+        </Card>
+    </SpaceItem>
+    <SpaceItem>
+        <Card Class="comment-form-card">
+            <Comment Avatar="@(@"https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png")">
+                <ContentTemplate>
+                    <div>
+                        <TextArea MinRows="4" @bind-Value="@_CommentModel.Content" />
+                        <Button>
+                            Add Comment
+                        </Button>
+                    </div>
+                </ContentTemplate>
+            </Comment>
+        </Card>
+    </SpaceItem>
+</Space>
 @code{
-
 
 }
