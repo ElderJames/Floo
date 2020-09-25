@@ -1,6 +1,10 @@
 ﻿@import '~antd/es/style/themes/default.less';
 
 .article-detail {
+    .ant-col {
+        width: 100%;
+        margin-bottom: 8px;
+    }
 
     .content-card {
         width: 100%;
@@ -16,6 +20,18 @@
 
         a {
             color: @text-color;
+        }
+    }
+
+    .comment-pagination {
+        float: right;
+        right: 50%;
+        position: relative;
+
+        .ant-pagination {
+            float: right;
+            right: -50%;
+            position: relative;
         }
     }
 }

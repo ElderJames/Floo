@@ -1,34 +1,42 @@
 ﻿@page "/{username}/{slug}"
 @attribute [Microsoft.AspNetCore.Authorization.AllowAnonymous]
 
-<Space Direction="vertical" Class="article-detail">
-    <SpaceItem>
+<Row Class="article-detail">
+    <Col>
         <Card Title="@_Article.Title" Class="content-card">
             <Body>
                 <Vditor.Preview Markdown="@_Article.Contnet"></Vditor.Preview>
             </Body>
         </Card>
-    </SpaceItem>
-    <SpaceItem>
+    </Col>
+    <Col>
         <Card Class="comment-card">
+            <Divider Orientation="left" Style="font-weight:bold">文章评论</Divider>
             <CommentList Comments="@_Comments" />
+            <Divider />
+            <div class="comment-pagination">
+                <Pagination PageIndex="1" Total="50"></Pagination>
+            </div>
         </Card>
-    </SpaceItem>
-    <SpaceItem>
+    </Col>
+    <Col>
         <Card Class="comment-form-card">
+            <Divider Orientation="left" Style="font-weight:bold">请登录</Divider>
             <Comment Avatar="@(@"https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png")">
                 <ContentTemplate>
                     <div>
                         <TextArea MinRows="4" @bind-Value="@_CommentModel.Content" />
-                        <Button>
+                        <br />
+                        <br />
+                        <Button type="primary">
                             Add Comment
                         </Button>
                     </div>
                 </ContentTemplate>
             </Comment>
         </Card>
-    </SpaceItem>
-</Space>
+    </Col>
+</Row>
 @code{
 
 }
