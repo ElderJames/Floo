@@ -2,7 +2,7 @@
 
 namespace Floo.App.Shared.Cms.Articles
 {
-    public class ArticleDto : BaseDto<long?>
+    public class ArticleDto : BaseDtoWithDatetime<long?>
     {
         public string Title { get; set; }
 
@@ -15,6 +15,7 @@ namespace Floo.App.Shared.Cms.Articles
         public string Cover { get; set; }
 
         public string Source { get; set; }
+        public string Author { get; set; }
 
         public long? ChannelId { get; set; }
 

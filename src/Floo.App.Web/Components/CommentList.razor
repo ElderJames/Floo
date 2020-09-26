@@ -3,10 +3,10 @@
 <AntList DataSource="@Comments" ItemLayout="@ListItemLayout.Vertical" Class="comment-list">
     <ListItem Class="comment-item">
         <Comment Actions="@(new []{likeAction,dislikeAction,replyAction})"
-                 Author="Han Solo"
-                 Avatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                 Content="We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently."
-                 Datetime="dateTime">
+                 Author="@context.Author"
+                 Avatar="@context.Avatar"
+                 Content="@context.Content"
+                 Datetime="@context.CreatedAtUtc.ToShortDateString()">
         </Comment>
     </ListItem>
 </AntList>

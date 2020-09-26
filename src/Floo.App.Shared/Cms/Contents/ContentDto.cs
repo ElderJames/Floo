@@ -1,7 +1,7 @@
 ﻿
 namespace Floo.App.Shared.Cms.Contents
 {
-    public class ContentDto : BaseDto<long?>
+    public class ContentDto : BaseDtoWithDatetime<long?>
     {
         public string Title { get; set; }
 
@@ -16,6 +16,8 @@ namespace Floo.App.Shared.Cms.Contents
         public string Source { get; set; }
 
         public long? ChannelId { get; set; }
+
+        public string Author { get; set; }
 
         public long? SpecialColumnId { get; set; }
     }
