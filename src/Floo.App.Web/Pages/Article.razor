@@ -1,1 +1,76 @@
 ﻿@page "/{username}/{slug}"
+@attribute [Microsoft.AspNetCore.Authorization.AllowAnonymous]
+
+<Row Class="article-detail">
+    <Col>
+    <Card Title="@_Article.Title" Class="content-card">
+        <Extra>
+            <Button Type="primary" OnClick="OnEditButtonClick">@labelOfEdit</Button>
+        </Extra>
+        <Body>
+            <div class="post-data">
+                <time itemprop="datePublished">
+                    发布于 @_Article.CreatedAtUtc.ToShortDateString()
+                </time>
+                / <span>默认频道</span> / <a href="#comments">
+                    没有评论
+                </a>
+                / 999 浏览
+            </div>
+            <p class="post-tags">
+                <span>
+                    <a>标签1</a>
+                    <a>标签2</a>
+                    <a>标签3</a>
+                    <a>标签4</a>
+                </span>
+            </p>
+            @if (inEdit)
+            {
+                <Vditor.Editor @bind-Value="@_Article.Contnet" Width="100%" MinHeight="500"></Vditor.Editor>
+            }
+            else
+            {
+                <Vditor.Preview Markdown="@_Article.Contnet"></Vditor.Preview>
+                <Divider />
+                <p class="post-info">
+                    本文由 <a>@_Article.Author</a> 创作，采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/"
+                       target="_blank"
+                       rel="external nofollow">知识共享署名4.0</a> 国际许可协议进行许可<br>本站文章除注明转载/出处外，均为作者原创或翻译，转载前请务必署名<br>最后编辑时间为:
+                    @_Article.UpdatedAtUtc.ToShortDateString()
+                </p>
+            }
+        </Body>
+    </Card>
+    </Col>
+    <Col>
+    <Card Class="comment-card" Id="comments">
+        <Divider Orientation="left" Style="font-weight:bold">文章评论</Divider>
+        <CommentList Comments="@_Comments" />
+        <Divider />
+        <div class="comment-pagination">
+            <Pagination PageIndex="1" Total="50"></Pagination>
+        </div>
+    </Card>
+    </Col>
+    <Col>
+    <Card Class="comment-form-card">
+        <Divider Orientation="left" Style="font-weight:bold">请登录</Divider>
+        <Comment Avatar="@_CommentModel.Avatar">
+            <ContentTemplate>
+                <div>
+                    <TextArea MinRows="4" @bind-Value="@_CommentModel.Content" />
+                    <br />
+                    <br />
+                    <Button type="primary" OnClick="OnAddCommentClick">
+                        提交评论
+                    </Button>
+                </div>
+            </ContentTemplate>
+        </Comment>
+    </Card>
+    </Col>
+</Row>
+@code{
+}

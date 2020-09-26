@@ -12,7 +12,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="5.0.0-rc.1.20451.17" PrivateAssets="all" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="5.0.0-rc.1.20451.17" />
     <PackageReference Include="System.Net.Http.Json" Version="5.0.0-rc.1.20451.14" />
-    <PackageReference Include="Vditor" Version="0.1.0-nightly-200904155930" />
+    <PackageReference Include="Vditor" Version="0.1.0-nightly-200924061630" />
   </ItemGroup>
 
   <ItemGroup>
@@ -50,6 +50,22 @@
   <ItemGroup>
     <Watch Include="**\*.razor" />
     <Watch Include="**\*.less" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Components\CommentForm.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Watch Remove="Components\CommentForm.razor" />
+    <Watch Remove="Components\CommentForm.razor.less" />
+    <Watch Remove="Components\CommentList.razor" />
+    <Watch Remove="Components\ContentList - Copy.razor.less" />
+    <Watch Remove="Pages\Article.razor.less" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Components\CommentForm.razor" />
   </ItemGroup>
 
 </Project>

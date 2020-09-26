@@ -23,16 +23,24 @@ namespace Floo.App.Web.Pages
         protected override async Task OnInitializedAsync()
         {
             await GetContents();
-           
+
         }
 
         private async Task GetContents()
         {
-            var ContentResult = await ContentService.QueryListAsync(ContentQuery);
-            if (ContentResult.Items.Any())
+            //var ContentResult = await ContentService.QueryListAsync(ContentQuery);
+            //if (ContentResult.Items.Any())
+            //{
+            //    _ContentList.AddRange(ContentResult.Items);
+            //}
+            _ContentList.Add(new ContentDto
             {
-                _ContentList.AddRange(ContentResult.Items);
-            }
+                Title = "文章1",
+                Summary = "文章1文章1文章1文章1文章1文章1文章1文章1文章1",
+                Cover = "https://picb.zhimg.com/v2-320009747fc474ccd71dbd87e5767b64_1440w.jpg?source=172ae18b",
+                Slug = "wenzhang1",
+                Author = "Liu"
+            });
         }
 
         private async Task CreateContent()
@@ -40,9 +48,9 @@ namespace Floo.App.Web.Pages
             await ContentService.CreateAsync(new ContentDto
             {
                 Title = "文章1",
-                Summary= "文章1文章1文章1文章1文章1文章1文章1文章1文章1",
-                Cover= "https://picb.zhimg.com/v2-320009747fc474ccd71dbd87e5767b64_1440w.jpg?source=172ae18b",
-                Slug="wenzhang1"
+                Summary = "文章1文章1文章1文章1文章1文章1文章1文章1文章1",
+                Cover = "https://picb.zhimg.com/v2-320009747fc474ccd71dbd87e5767b64_1440w.jpg?source=172ae18b",
+                Slug = "wenzhang1"
             });
         }
     }
