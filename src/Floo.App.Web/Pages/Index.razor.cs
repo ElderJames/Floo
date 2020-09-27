@@ -39,7 +39,17 @@ namespace Floo.App.Web.Pages
                 Summary = "文章1文章1文章1文章1文章1文章1文章1文章1文章1",
                 Cover = "https://picb.zhimg.com/v2-320009747fc474ccd71dbd87e5767b64_1440w.jpg?source=172ae18b",
                 Slug = "wenzhang1",
-                Author = "Liu"
+                Author = "Liu",
+                Type=ContentType.Article
+            });
+            _ContentList.Add(new ContentDto
+            {
+                Title = "What is blazor?",
+                Summary = "文章1文章1文章1文章1文章1文章1文章1文章1文章1",
+                Cover = "https://picb.zhimg.com/v2-320009747fc474ccd71dbd87e5767b64_1440w.jpg?source=172ae18b",
+                Slug = "wenzhang1",
+                Author = "Liu",
+                Type = ContentType.Question
             });
         }
 

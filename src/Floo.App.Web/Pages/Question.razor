@@ -1,0 +1,110 @@
+﻿@page "/question/{slug}"
+@attribute [Microsoft.AspNetCore.Authorization.AllowAnonymous]
+
+<Row Class="article-detail">
+    <Col>
+    <Card Title="@_Question.Title" Class="question-card" Actions="new[] { actionFocusOn, actionEdit(OnAddCommentClick), actionShare }">
+        <Extra>
+            <Button Type="primary" OnClick="OnEditButtonClick">@labelOfEdit</Button>
+        </Extra>
+        <Body>
+            <div class="post-data">
+                <time itemprop="datePublished">
+                    发布于 @_Question.CreatedAtUtc.ToShortDateString()
+                </time>
+                / <span>默认频道</span> / <a href="#comments">
+                    10个回答
+                </a>
+                / 999 浏览
+            </div>
+            <p class="post-tags">
+                <span>
+                    <a>标签1</a>
+                    <a>标签2</a>
+                    <a>标签3</a>
+                    <a>标签4</a>
+                </span>
+            </p>
+            @if (inEdit)
+            {
+                <Vditor.Editor @bind-Value="@_Question.Contnet" Width="100%" MinHeight="500"></Vditor.Editor>
+            }
+            else
+            {
+                <Vditor.Preview Markdown="@_Question.Contnet"></Vditor.Preview>
+                <Divider />
+            }
+        </Body>
+    </Card>
+    </Col>
+    <Col>
+    @if (!hideCommentForm)
+    {
+        <Card>
+            <div class="ant-comment">
+                <div class="ant-comment-inner">
+                    <div class="ant-comment-avatar">
+                        <!--!-->
+                        <span class="ant-avatar ant-avatar-image">
+                            <img src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png">
+                        </span>
+                    </div><!--!-->
+                    <div class="ant-comment-content">
+                        <div class="ant-comment-content-author">
+                            <span class="ant-comment-content-author-name">
+                                <a>Liu</a>
+                            </span>
+                            <span class="ant-comment-content-author-time">
+                                <span>9/26/2020</span>
+                            </span>
+                        </div><!--!-->
+                        <div class="ant-comment-content-detail">
+                            <Vditor.Editor @bind-Value="@_CommentModel.Content" Width="100%" MinHeight="500"></Vditor.Editor>
+                        </div>
+                        <ul class="ant-comment-actions">
+                            <li>
+                                <Button type="primary" OnClick="OnCommitCommentClick">
+                                    提交评论
+                                </Button>
+                            </li>
+                        </ul>
+                    </div>
+                </div><!--!-->
+                <div class="ant-comment-nested"></div>
+            </div>
+        </Card>
+    }
+    </Col>
+    <Col>
+    <Card Class="comment-card" Id="comments">
+        <Divider Orientation="left" Style="font-weight:bold">99个回答</Divider>
+        <AnswerList Answers="@_Comments" />
+        <div class="comment-pagination">
+            <Pagination PageIndex="1" Total="50"></Pagination>
+        </div>
+    </Card>
+    </Col>
+</Row>
+@code{
+
+    bool hideCommentForm = true;
+    void OnAddCommentClick()
+    {
+        hideCommentForm = !hideCommentForm;
+    }
+    private RenderFragment actionFocusOn =@<Template>
+        <Button Icon="pushpin" Type="primary">关注问题</Button>
+    </Template>;
+
+RenderFragment actionEdit(Action clickAction)
+{
+return
+@<div>
+    <Button Icon="edit" Type="primary" OnClick="clickAction">写回答</Button>
+</div>;
+}
+
+private RenderFragment actionShare =@<Template>
+    <Button Icon="send" Type="link">分享</Button>
+</Template>;
+}
