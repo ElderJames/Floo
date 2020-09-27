@@ -1,5 +1,7 @@
-﻿using Floo.App.Shared.Cms.Articles;
+﻿using AntDesign;
+using Floo.App.Shared.Cms.Articles;
 using Floo.App.Shared.Cms.Comments;
+using Floo.App.Shared.Cms.Contents;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
@@ -62,7 +64,8 @@ namespace Floo.App.Web.Pages
             _Article = new ArticleDto
             {
                 Title = "第一篇文章",
-                Contnet = @"# Floo 🔥
+                Contnet = new ContentDto { 
+                    Text = @"# Floo 🔥
 
 > Floo network in the Muggle world! 🧙‍♂️ 🧙‍♀️
 
@@ -72,7 +75,8 @@ A community site.
 [![Floo](https://img.shields.io/github/license/ElderJames/Floo?style=flat-square)](https://github.com/ElderJames/floo/blob/master/LICENSE)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg?style=flat-square)](code_of_conduct.md)
 [![Discord Server](https://img.shields.io/discord/758258857667067905?color=%237289DA&label=Floo&logo=discord&logoColor=white&style=flat-square)](https://discord.gg/5BCCnDZ)
-",
+"
+                },
                 Author = "Liu",
                 UpdatedAtUtc = DateTime.Now
 

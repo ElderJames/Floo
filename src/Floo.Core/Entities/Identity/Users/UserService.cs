@@ -9,18 +9,16 @@ namespace Floo.Core.Entities.Identity.Users
 {
     public class UserService : IUserService
     {
-        IEntityStorage<User> _userStorage;
         UserManager<User> _userManager;
 
-        public UserService(UserManager<User> userManager, IEntityStorage<User> userStorage)
+        public UserService(UserManager<User> userManager)
         {
             _userManager = userManager;
-            _userStorage = userStorage;
         }
 
         public async Task<UserDto> FindByIdAsync(long id, CancellationToken cancellation = default)
         {
-            var user = await _userStorage.FindAsync(cancellation,id);
+            var user = await _userManager.FindByIdAsync(id.ToString());
             return Mapper.Map<User, UserDto>(user);
         }
 

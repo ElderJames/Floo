@@ -5,7 +5,7 @@ namespace Floo.App.Shared.Cms.Contents
 {
     public interface IContentService
     {
-        public Task<ContentDto> FindAsync(long id, CancellationToken cancellation = default);
+        public Task<ContentDto> FindByIdAsync(long id, CancellationToken cancellation = default);
 
         public Task<long> CreateAsync(ContentDto Content, CancellationToken cancellation = default);
 

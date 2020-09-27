@@ -5,7 +5,7 @@ namespace Floo.App.Shared.Cms.Comments
 {
     public interface ICommentService
     {
-        public Task<CommentDto> FindAsync(long id, CancellationToken cancellation = default);
+        public Task<CommentDto> FindByIdAsync(long id, CancellationToken cancellation = default);
 
         public Task<long> CreateAsync(CommentDto comment, CancellationToken cancellation = default);
 

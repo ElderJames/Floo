@@ -2,13 +2,12 @@
 
 <AntList DataSource="@Contents" ItemLayout="@ListItemLayout.Vertical" Class="content-list">
     <ListItem Class="content-list-item" Actions="@(new[] {LikeButtons(3), IconText(("star", "156")), IconText(("like", "156")), IconText(("message", "2")) })">
-        <h1><a href="@context.Url">@context.Title</a></h1>
-
+        <h1><a href="/@context.Author/@context.Article?.Slug">@context.Article?.Title</a></h1>
         <div class="content-content">
             <div class="content-cover">
-                <img src="@context.Cover" />
+                <img src="@context.Article?.Cover" />
             </div>
-            @context.Contnet
+            @context.Article?.Contnet
         </div>
     </ListItem>
 </AntList>

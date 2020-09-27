@@ -1,5 +1,8 @@
 using Floo.App.Shared;
+using Floo.App.Shared.Cms.Articles;
+using Floo.App.Shared.Cms.Comments;
 using Floo.App.Shared.Cms.Contents;
+using Floo.Core.Entities.Cms.Articles;
 using Floo.Core.Entities.Cms.Contents;
 using Floo.Core.Entities.Identity;
 using Floo.Core.Entities.Identity.Users;
@@ -74,7 +77,7 @@ namespace Floo.App.Server
                 options.AssemblyString = typeof(IWeatherForecastService).Assembly.FullName;
             });
 
-            services.AddScoped<IContentService, ContentService>();
+            services.AddFlooCore();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

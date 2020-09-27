@@ -9,9 +9,9 @@ namespace Floo.Core.Entities.Cms.Contents
 {
     public class ContentService : IContentService
     {
-        private IEntityStorage<Content> _contentStorage;
+        private IContentRepository _contentStorage;
 
-        public ContentService(IEntityStorage<Content> contentStorage)
+        public ContentService(IContentRepository contentStorage)
         {
             _contentStorage = contentStorage;
         }
@@ -19,37 +19,32 @@ namespace Floo.Core.Entities.Cms.Contents
         public async Task<long> CreateAsync(ContentDto Content, CancellationToken cancellation = default)
         {
             var entity = Mapper.Map<ContentDto, Content>(Content);
-            var result = await _contentStorage.CreateAndSaveAsync(entity, cancellation);
+            var result = await _contentStorage.CreateAsync(entity, cancellation);
             return result.Id;
         }
 
-        public async Task<ContentDto> FindAsync(long id, CancellationToken cancellation = default)
+        public async Task<ContentDto> FindByIdAsync(long id, CancellationToken cancellation = default)
         {
-            var entity = await _contentStorage.FindAsync(cancellation, id);
+            var entity = await _contentStorage.FindByIdAsync(id, cancellation);
             return Mapper.Map<Content, ContentDto>(entity);
         }
 
         public async Task<ListResult<ContentDto>> QueryListAsync(ContentQuery query)
         {
-            if (query.OrderBy == null && query.OrderByDesc == null)
-            {
-                query.OrderByDesc = new[] { nameof(IEntity.CreatedAtUtc) };
-            }
-
-            var result = await _contentStorage.QueryAsync(query);
+            var result = await _contentStorage.QueryListAsync(query);
 
             return Mapper.Map<ListResult<Content>, ListResult<ContentDto>>(result);
         }
 
-        public async Task<bool> UpdateAsync(ContentDto Content, CancellationToken cancellation = default)
+        public async Task<bool> UpdateAsync(ContentDto content, CancellationToken cancellation = default)
         {
-            var entity = await _contentStorage.FindAsync(cancellation, Content.Id);
+            var entity = await _contentStorage.FindByIdAsync(content.Id.Value, cancellation);
             if (entity == null)
             {
                 return false;
             }
-            Mapper.Map(Content, entity);
-            return await _contentStorage.UpdateAndSaveAsync(entity) > 0;
+            Mapper.Map(content, entity);
+            return await _contentStorage.UpdateAsync(entity) > 0;
         }
     }
 }

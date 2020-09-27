@@ -1,7 +1,6 @@
 ﻿using Floo.App.Shared;
 using Floo.App.Shared.Cms.Articles;
 using Floo.Core.Shared.Utils;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -9,9 +8,9 @@ namespace Floo.Core.Entities.Cms.Articles
 {
     public class ArticleService : IArticleService
     {
-        private IEntityStorage<Article> _articleStorage;
+        private IArticleRepository _articleStorage;
 
-        public ArticleService(IEntityStorage<Article> articleStorage)
+        public ArticleService(IArticleRepository articleStorage)
         {
             _articleStorage = articleStorage;
         }
@@ -19,40 +18,32 @@ namespace Floo.Core.Entities.Cms.Articles
         public async Task<long> CreateAsync(ArticleDto article, CancellationToken cancellation = default)
         {
             var entity = Mapper.Map<ArticleDto, Article>(article);
-            var result = await _articleStorage.CreateAndSaveAsync(entity, cancellation);
+            var result = await _articleStorage.CreateAsync(entity, cancellation);
             return result.Id;
         }
 
-        public async Task<ArticleDto> FindAsync(long id, CancellationToken cancellation = default)
+        public async Task<ArticleDto> FindByIdAsync(long id, CancellationToken cancellation = default)
         {
-            var entity = await _articleStorage.FindAsync(cancellation, id);
+            var entity = await _articleStorage.FindByIdAsync( id,cancellation);
             return Mapper.Map<Article, ArticleDto>(entity);
         }
 
         public async Task<ListResult<ArticleDto>> QueryListAsync(ArticleQuery query)
         {
-            if (query.OrderBy == null && query.OrderByDesc == null)
-            {
-                query.OrderByDesc = new[] { nameof(IEntity.CreatedAtUtc) };
-            }
-
-            var result = await _articleStorage.QueryAsync(query, linq =>
-            {
-                linq = linq.Where(x => x.ChannelId == query.ChannelId)
-                .Where(x => x.Title.Contains(query.Title));
-            });
+            var result = await _articleStorage.QueryListAsync(query);
             return Mapper.Map<ListResult<Article>, ListResult<ArticleDto>>(result);
         }
 
         public async Task<bool> UpdateAsync(ArticleDto article, CancellationToken cancellation = default)
         {
-            var entity = await _articleStorage.FindAsync(cancellation, article.Id);
+            var entity = await _articleStorage.FindByIdAsync(article.Id, cancellation);
             if (entity == null)
             {
                 return false;
             }
+
             Mapper.Map(article, entity);
-            return await _articleStorage.UpdateAndSaveAsync(entity) > 0;
+            return await _articleStorage.UpdateAsync(entity) > 0;
         }
     }
 }

@@ -4,6 +4,11 @@ namespace Floo.App.Shared.Cms.Articles
 {
     public class ArticleQuery : BaseQuery
     {
+        public ArticleQuery()
+        {
+             OrderByDesc = new[] { nameof(BaseDtoWithDatetime<long>.CreatedAtUtc) };
+        }
+
         public string Title { get; set; }
 
         public string Slug { get; set; }

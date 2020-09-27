@@ -1,7 +1,7 @@
 ﻿using Floo.Core.Entities.Cms.Contents;
 using Floo.Core.Entities.Cms.Channels;
 using Floo.Core.Entities.Cms.Comments;
-using Floo.Core.Entities.Cms.SpecialColumns;
+using Floo.Core.Entities.Cms.Columns;
 using Floo.Core.Entities.Cms.Tags;
 using Floo.Core.Entities.Cms.Answers;
 using Floo.Core.Entities.Cms.Articles;

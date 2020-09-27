@@ -5,7 +5,7 @@ namespace Floo.App.Shared.Cms.Channels
 {
     public interface IChannelService
     {
-        public Task<ChannelDto> FindAsync(long id, CancellationToken cancellation = default);
+        public Task<ChannelDto> FindByIdAsync(long id, CancellationToken cancellation = default);
 
         public Task<long> CreateAsync(ChannelDto channel, CancellationToken cancellation = default);
 
