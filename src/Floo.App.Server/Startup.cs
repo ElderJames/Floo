@@ -66,6 +66,7 @@ namespace Floo.App.Server
             services.AddScoped<SignOutSessionStateManager>();
 
             services.AddFlooEntityStorage<ApplicationDbContext>();
+            services.AddRepositories(Configuration);
 
             services.AddAntDesign();
 
