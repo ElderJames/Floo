@@ -1,0 +1,74 @@
+﻿@namespace Floo.App.Web.Components
+
+<AntList DataSource="@Answers" ItemLayout="@ListItemLayout.Vertical" Class="comment-list">
+    <ListItem Class="comment-item">
+        <div class="ant-comment">
+            <div class="ant-comment-inner">
+                <div class="ant-comment-avatar">
+                    <!--!-->
+                    <span class="ant-avatar ant-avatar-image">
+                        <img src="@context.Avatar">
+                    </span>
+                </div><!--!-->
+                <div class="ant-comment-content">
+                    <div class="ant-comment-content-author">
+                        <span class="ant-comment-content-author-name">
+                            <a>@context.Author</a>
+                        </span>
+                        <span class="ant-comment-content-author-time">
+                            <span>@context.CreatedAtUtc.ToShortDateString()</span>
+                        </span>
+                    </div><!--!-->
+                    <div class="ant-comment-content-detail">
+                        <Vditor.Preview Markdown="@context.Content"></Vditor.Preview>
+                    </div>
+                </div>
+            </div><!--!-->
+            <div class="ant-comment-nested"></div>
+        </div>
+    </ListItem>
+</AntList>
+
+
+@code
+{
+    bool like = false;
+    bool dislike = false;
+
+    RenderFragment likeAction =>
+    @<span>
+        <Tooltip Title="@("Like")">
+            <Icon Type="like" Theme="@(like ? "fill" : "outline")" OnClick="SetLike" />
+        </Tooltip>
+        <span>@(like ? 1 : 0)</span>
+    </span>;
+
+RenderFragment dislikeAction =>
+@<span>
+    <Tooltip Title="@("Dislike")">
+        <Icon Type="dislike" Theme="@(dislike ? "fill" : "outline")" OnClick="SetDislike" />
+    </Tooltip>
+    <span>@(dislike ? 1:0)</span>
+</span>;
+
+RenderFragment replyAction =@<span>Reply to</span>;
+
+RenderFragment dateTime =
+@<Tooltip Title="@(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"))">
+    <span>
+        @(MomentHelper.FromNow(DateTime.Now))
+    </span>
+</Tooltip>;
+
+void SetLike()
+{
+like = true;
+dislike = false;
+}
+
+void SetDislike()
+{
+like = false;
+dislike = true;
+}
+}

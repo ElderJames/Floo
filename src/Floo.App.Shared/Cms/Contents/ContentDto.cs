@@ -1,4 +1,6 @@
 ﻿
+using System.Numerics;
+
 namespace Floo.App.Shared.Cms.Contents
 {
     public class ContentDto : BaseDtoWithDatetime<long?>
@@ -18,7 +20,20 @@ namespace Floo.App.Shared.Cms.Contents
         public long? ChannelId { get; set; }
 
         public string Author { get; set; }
-
+        public ContentType Type { get; set; }
+        public string Url
+        {
+            get
+            {
+                switch (Type)
+                {
+                    case ContentType.Question:
+                            return $"/question/{Slug}";
+                    default:
+                        return $"/{Author}/{Slug}";
+                }
+            }
+        }
         public long? SpecialColumnId { get; set; }
     }
 }
