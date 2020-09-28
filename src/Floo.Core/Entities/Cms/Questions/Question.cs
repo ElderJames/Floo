@@ -1,5 +1,5 @@
 ﻿using Floo.Core.Entities.Cms.Contents;
-using Floo.Core.Shared;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Floo.Core.Entities.Cms.Questions
 {
@@ -11,6 +11,7 @@ namespace Floo.Core.Entities.Cms.Questions
 
         public long ContentId { get; set; }
 
+        [NotMapped]
         public Content Content { get; set; }
     }
 }

@@ -1,6 +1,9 @@
 ﻿using Floo.App.Shared;
 using Floo.App.Shared.Cms.Articles;
+using Floo.App.Shared.Cms.Contents;
+using Floo.Core.Entities.Cms.Contents;
 using Floo.Core.Shared.Utils;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -24,14 +27,20 @@ namespace Floo.Core.Entities.Cms.Articles
 
         public async Task<ArticleDto> FindByIdAsync(long id, CancellationToken cancellation = default)
         {
-            var entity = await _articleStorage.FindByIdAsync( id,cancellation);
+            var entity = await _articleStorage.FindByIdAsync(id, cancellation);
             return Mapper.Map<Article, ArticleDto>(entity);
         }
 
         public async Task<ListResult<ArticleDto>> QueryListAsync(ArticleQuery query)
         {
             var result = await _articleStorage.QueryListAsync(query);
-            return Mapper.Map<ListResult<Article>, ListResult<ArticleDto>>(result);
+            return new ListResult<ArticleDto>(result)
+            {
+                Items = Mapper.Map<Article, ArticleDto>(result.Items, (from, to) =>
+                {
+                    to.Contnet = Mapper.Map<Content, ContentDto>(from.Contnet);
+                })
+            };
         }
 
         public async Task<bool> UpdateAsync(ArticleDto article, CancellationToken cancellation = default)

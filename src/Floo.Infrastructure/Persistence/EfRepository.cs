@@ -24,6 +24,8 @@ namespace Floo.Infrastructure.Persistence
             DbSet = context.Set<TEntity>();
         }
 
+        public IDbContext Context => _context;
+
         public virtual IQueryable<TEntity> DbSet { get; }
 
         public TEntity Create(TEntity entity)
@@ -63,13 +65,13 @@ namespace Floo.Infrastructure.Persistence
         {
             var linq = this.DbSet;
 
-            HandleConditions(ref linq, query);
+            //HandleConditions(ref linq, query);
 
             var result = new ListResult<TEntity>(query.Offset, query.Limit);
 
             if (query.Offset <= 0)
             {
-                result.Count = await linq.CountAsync();
+                result.Count = await linq.CountAsync(cancellationToken: cancellationToken);
             }
 
             if (query.OrderBy != null && query.OrderBy.Any())

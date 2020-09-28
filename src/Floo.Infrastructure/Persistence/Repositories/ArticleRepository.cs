@@ -10,7 +10,7 @@ namespace Floo.Infrastructure.Persistence.Repositories
     {
         public ArticleRepository(IDbContext context, IIdentityContext identityContext) : base(context, identityContext) { }
 
-        //public override IQueryable<Article> DbSet => base.DbSet.Include(x => x.Contnet).Include(x => x.Column);
+        public override IQueryable<Article> DbSet => Context.Set<Article>().Include(x => x.Contnet).Include(x=>x.Channel).Include(x=>x.Column);
 
         public override void HandleConditions<TQuery>(ref IQueryable<Article> linq, TQuery query)
         {

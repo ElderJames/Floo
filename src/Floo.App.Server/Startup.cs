@@ -17,12 +17,14 @@ using Microsoft.AspNetCore.Components.Server;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System.Text.Json;
 
 namespace Floo.App.Server
 {
@@ -80,6 +82,8 @@ namespace Floo.App.Server
             {
                 options.AssemblyString = typeof(IWeatherForecastService).Assembly.FullName;
             });
+
+            services.Configure<JsonOptions>(options => options.JsonSerializerOptions.IgnoreNullValues = true);
 
             services.AddFlooCore();
         }

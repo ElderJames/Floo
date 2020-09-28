@@ -1,5 +1,6 @@
 ﻿using Floo.App.Shared.Cms.Articles;
 using Floo.App.Shared.Cms.Contents;
+using Floo.App.Shared.Cms.Questions;
 using Floo.App.Shared.Identity.User;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
@@ -49,13 +50,16 @@ namespace Floo.App.Web.Pages
                     NickName = "Liu"
                 }
             });
-            _ContentList.Add(new ContentDto
+            _articleList.Add(new ContentDto
             {
-                Title = "What is blazor?",
-                Summary = "文章1文章1文章1文章1文章1文章1文章1文章1文章1",
-                Cover = "https://picb.zhimg.com/v2-320009747fc474ccd71dbd87e5767b64_1440w.jpg?source=172ae18b",
-                Slug = "wenzhang1",
-                Author = "Liu",
+                Question = new QuestionDto
+                {
+                    Title = "What is blazor?",
+                    Summary = "文章1文章1文章1文章1文章1文章1文章1文章1文章1",
+                    Cover = "https://picb.zhimg.com/v2-320009747fc474ccd71dbd87e5767b64_1440w.jpg?source=172ae18b",
+                    Slug = "wenzhang1",
+                },
+                Author = new UserDto { UserName = "Liu" },
                 Type = ContentType.Question
             });
         }

@@ -138,7 +138,7 @@ namespace Floo.Core.Shared.Utils
                         continue;
                     }
 
-                    if (sourceItem.GetCustomAttribute<NotMappedAttribute>() != null)
+                    if (targetItem.GetCustomAttribute<NotMappedAttribute>() != null)
                     {
                         continue;
                     }
@@ -230,7 +230,7 @@ namespace Floo.Core.Shared.Utils
                         continue;
                     }
 
-                    if (sourceItem.GetCustomAttribute<NotMappedAttribute>() != null)
+                    if (targetItem.GetCustomAttribute<NotMappedAttribute>() != null)
                     {
                         continue;
                     }

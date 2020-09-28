@@ -1,6 +1,7 @@
 ﻿using Floo.App.Shared.Cms.Channels;
 using Floo.App.Shared.Cms.Contents;
 using Floo.App.Shared.Cms.SpecialColumns;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Floo.App.Shared.Cms.Articles
 {
@@ -22,6 +23,7 @@ namespace Floo.App.Shared.Cms.Articles
 
         public long? SpecialColumnId { get; set; }
 
+        [NotMapped]
         public ContentDto Contnet { get; set; }
 
         public ChannelDto Channel { get; set; }

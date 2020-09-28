@@ -62,13 +62,17 @@ namespace Floo.App.Web.Pages
             _Question = new ArticleDto
             {
                 Title = "What is blazor?",
-                Contnet = @"Blazor is a [Single Page Application](https://en.wikipedia.org/wiki/Single-page_application) development framework. The name Blazor is a combination/mutation of the words Browser and Razor (the .NET HTML view generating engine). The implication being that instead of having to execute Razor views on the server in order to present HTML to the browser, Blazor is capable of executing these views on the client.
+                
+                Contnet =new Floo.App.Shared.Cms.Contents.ContentDto
+                {
+                    Text = @"Blazor is a [Single Page Application](https://en.wikipedia.org/wiki/Single-page_application) development framework. The name Blazor is a combination/mutation of the words Browser and Razor (the .NET HTML view generating engine). The implication being that instead of having to execute Razor views on the server in order to present HTML to the browser, Blazor is capable of executing these views on the client.
 
 [![Blazor client side](https://blazor-university.com/wp-content/uploads/2019/05/BlazorClientSide-300x251.png)](https://blazor-university.com/wp-content/uploads/2019/05/BlazorClientSide.png)
 
 Blazor app with client-side execution
 
 Blazor also supports executing [SPAs on the server](https://blazor-university.com/overview/blazor-hosting-models/).",
+                },
                 Author = "Liu",
                 UpdatedAtUtc = DateTime.Now
 
