@@ -2,9 +2,12 @@
 
 <div align="center">
 
-A community site.
+一个开源社区系统。
 
-> The floo network in the muggle world! 🧙‍♂️ 🧙‍♀️
+> 麻瓜世界中的飞路网！ 🧙‍♂️ 🧙‍♀️
+
+
+
 
 ![Github Actions](https://img.shields.io/github/workflow/status/ElderJames/Floo/Deploy?style=flat-square)
 [![Floo](https://img.shields.io/github/license/ElderJames/Floo?style=flat-square)](https://github.com/ElderJames/floo/blob/master/LICENSE)
@@ -13,4 +16,4 @@ A community site.
 
 </div>
 
-English | [简体中文](./README.zh-CN.md)
+[English](./README.md) | 简体中文 
