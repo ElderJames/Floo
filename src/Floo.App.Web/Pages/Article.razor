@@ -27,11 +27,11 @@
             </p>
             @if (inEdit)
             {
-                <Vditor.Editor @bind-Value="@_Article.Contnet" Width="100%" MinHeight="500"></Vditor.Editor>
+                <Vditor.Editor @bind-Value="@_Article.Contnet.Text" Width="100%" MinHeight="500" />
             }
             else
             {
-                <Vditor.Preview Markdown="@_Article.Contnet"></Vditor.Preview>
+                <Vditor.Preview Markdown="@_Article.Contnet?.Text"></Vditor.Preview>
                 <Divider />
                 <p class="post-info">
                     本文由 <a>@_Article.Author</a> 创作，采用

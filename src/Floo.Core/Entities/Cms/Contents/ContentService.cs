@@ -1,5 +1,11 @@
 ﻿using Floo.App.Shared;
+using Floo.App.Shared.Cms.Answers;
+using Floo.App.Shared.Cms.Articles;
 using Floo.App.Shared.Cms.Contents;
+using Floo.App.Shared.Cms.Questions;
+using Floo.Core.Entities.Cms.Answers;
+using Floo.Core.Entities.Cms.Articles;
+using Floo.Core.Entities.Cms.Questions;
 using Floo.Core.Shared.Utils;
 using System.Linq;
 using System.Threading;
@@ -9,9 +15,9 @@ namespace Floo.Core.Entities.Cms.Contents
 {
     public class ContentService : IContentService
     {
-        private IEntityStorage<Content> _contentStorage;
+        private IContentRepository _contentStorage;
 
-        public ContentService(IEntityStorage<Content> contentStorage)
+        public ContentService(IContentRepository contentStorage)
         {
             _contentStorage = contentStorage;
         }
@@ -19,37 +25,52 @@ namespace Floo.Core.Entities.Cms.Contents
         public async Task<long> CreateAsync(ContentDto Content, CancellationToken cancellation = default)
         {
             var entity = Mapper.Map<ContentDto, Content>(Content);
-            var result = await _contentStorage.CreateAndSaveAsync(entity, cancellation);
+            var result = await _contentStorage.CreateAsync(entity, cancellation);
             return result.Id;
         }
 
-        public async Task<ContentDto> FindAsync(long id, CancellationToken cancellation = default)
+        public async Task<ContentDto> FindByIdAsync(long id, CancellationToken cancellation = default)
         {
-            var entity = await _contentStorage.FindAsync(cancellation, id);
+            var entity = await _contentStorage.FindByIdAsync(id, cancellation);
             return Mapper.Map<Content, ContentDto>(entity);
         }
 
         public async Task<ListResult<ContentDto>> QueryListAsync(ContentQuery query)
         {
-            if (query.OrderBy == null && query.OrderByDesc == null)
+            var result = await _contentStorage.QueryListAsync(query);
+
+            return new ListResult<ContentDto>(result)
             {
-                query.OrderByDesc = new[] { nameof(IEntity.CreatedAtUtc) };
-            }
+                Items = Mapper.Map<Content, ContentDto>(result.Items, (from, to) =>
+                {
+                    switch( from.Type)
+                    {
+                        case ContentType.Article:
+                            to.Article = Mapper.Map<Article, ArticleDto>(from.Article);
+                            break;
 
-            var result = await _contentStorage.QueryAsync(query);
+                        case ContentType.Question:
+                            to.Question = Mapper.Map<Question, QuestionDto>(from.Question);
+                            break;
 
-            return Mapper.Map<ListResult<Content>, ListResult<ContentDto>>(result);
+                        case ContentType.Answer:
+                            to.Answer = Mapper.Map<Answer, AnswerDto>(from.Answer);
+                            break;
+                    };
+                   
+                })
+            };
         }
 
-        public async Task<bool> UpdateAsync(ContentDto Content, CancellationToken cancellation = default)
+        public async Task<bool> UpdateAsync(ContentDto content, CancellationToken cancellation = default)
         {
-            var entity = await _contentStorage.FindAsync(cancellation, Content.Id);
+            var entity = await _contentStorage.FindByIdAsync(content.Id.Value, cancellation);
             if (entity == null)
             {
                 return false;
             }
-            Mapper.Map(Content, entity);
-            return await _contentStorage.UpdateAndSaveAsync(entity) > 0;
+            Mapper.Map(content, entity);
+            return await _contentStorage.UpdateAsync(entity) > 0;
         }
     }
 }

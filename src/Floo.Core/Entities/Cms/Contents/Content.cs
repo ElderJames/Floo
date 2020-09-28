@@ -2,11 +2,11 @@
 using Floo.Core.Entities.Cms.Articles;
 using Floo.Core.Entities.Cms.Comments;
 using Floo.Core.Entities.Cms.Questions;
-using Floo.Core.Entities.Cms.SpecialColumns;
+using Floo.Core.Entities.Cms.Columns;
 using Floo.Core.Entities.Cms.Tags;
 using Floo.Core.Entities.Identity.Users;
-using Floo.Core.Shared;
 using System.Collections.Generic;
+using Floo.Core.Entities.Cms.Answers;
 
 namespace Floo.Core.Entities.Cms.Contents
 {
@@ -21,6 +21,8 @@ namespace Floo.Core.Entities.Cms.Contents
         public Article Article { get; set; }
 
         public Question Question { get; set; }
+
+        public Answer Answer { get; set; }
 
         public ICollection<Tag> Tags { get; set; }
 

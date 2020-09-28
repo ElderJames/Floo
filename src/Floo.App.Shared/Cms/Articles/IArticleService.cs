@@ -5,7 +5,7 @@ namespace Floo.App.Shared.Cms.Articles
 {
     public interface IArticleService
     {
-        public Task<ArticleDto> FindAsync(long id, CancellationToken cancellation = default);
+        public Task<ArticleDto> FindByIdAsync(long id, CancellationToken cancellation = default);
 
         public Task<long> CreateAsync(ArticleDto article, CancellationToken cancellation = default);
 

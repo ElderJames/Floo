@@ -8,9 +8,9 @@ namespace Floo.Core.Entities.Cms.Comments
 {
     public class CommentService : ICommentService
     {
-        private IEntityStorage<Comment> _commentStorage;
+        private ICommentRepository _commentStorage;
 
-        public CommentService(IEntityStorage<Comment> commentStorage)
+        public CommentService(ICommentRepository commentStorage)
         {
             _commentStorage = commentStorage;
         }
@@ -18,31 +18,31 @@ namespace Floo.Core.Entities.Cms.Comments
         public async Task<long> CreateAsync(CommentDto comment, CancellationToken cancellation = default)
         {
             var entity = Mapper.Map<CommentDto, Comment>(comment);
-            var result = await _commentStorage.CreateAndSaveAsync(entity, cancellation);
+            var result = await _commentStorage.CreateAsync(entity, cancellation);
             return result.Id;
         }
 
-        public async Task<CommentDto> FindAsync(long id, CancellationToken cancellation = default)
+        public async Task<CommentDto> FindByIdAsync(long id, CancellationToken cancellation = default)
         {
-            var entity = await _commentStorage.FindAsync(cancellation, id);
+            var entity = await _commentStorage.FindByIdAsync( id, cancellation);
             return Mapper.Map<Comment, CommentDto>(entity);
         }
 
         public async Task<ListResult<CommentDto>> QueryListAsync(BaseQuery query)
         {
-            var result = await _commentStorage.QueryAsync(query);
+            var result = await _commentStorage.QueryListAsync(query);
             return Mapper.Map<ListResult<Comment>, ListResult<CommentDto>>(result);
         }
 
         public async Task<bool> UpdateAsync(CommentDto comment, CancellationToken cancellation = default)
         {
-            var entity = await _commentStorage.FindAsync(cancellation, comment.Id);
+            var entity = await _commentStorage.FindByIdAsync( comment.Id,cancellation);
             if (entity == null)
             {
                 return false;
             }
             Mapper.Map(comment, entity);
-            return await _commentStorage.UpdateAndSaveAsync(entity) > 0;
+            return await _commentStorage.UpdateAsync(entity) > 0;
         }
     }
 }

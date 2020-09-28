@@ -11,20 +11,22 @@ using System.Threading.Tasks;
 
 namespace Floo.Infrastructure.Persistence
 {
-    public class EfCoreEntityStorage<TEntity> : IEntityStorage<TEntity>
-        where TEntity : class, IEntity
+    public class EfRepository<TEntity> : IRepository<TEntity>
+        where TEntity : BaseEntity
     {
         private readonly IDbContext _context;
         private readonly IIdentityContext _identityContext;
 
-        public EfCoreEntityStorage(IDbContext context, IIdentityContext identityContext)
+        public EfRepository(IDbContext context, IIdentityContext identityContext)
         {
             _context = context;
             _identityContext = identityContext;
             DbSet = context.Set<TEntity>();
         }
 
-        public DbSet<TEntity> DbSet { get; }
+        public IDbContext Context => _context;
+
+        public virtual IQueryable<TEntity> DbSet { get; }
 
         public TEntity Create(TEntity entity)
         {
@@ -35,53 +37,41 @@ namespace Floo.Infrastructure.Persistence
             return entity;
         }
 
-        public async Task<TEntity> CreateAndSaveAsync(TEntity entity, CancellationToken cancellationToken = default)
+        public virtual async Task<TEntity> CreateAsync(TEntity entity, CancellationToken cancellationToken = default)
         {
             this.Create(entity);
             await this._context.SaveChangesAsync(cancellationToken);
             return entity;
         }
 
-        public void Delete(TEntity entity)
+        public virtual void Delete(TEntity entity)
         {
             entity.Deleted = true;
             this._context.Set<TEntity>().Update(entity);
         }
 
-        public Task<int> DeleteAndSaveAsync(TEntity entity, CancellationToken cancellationToken = default)
+        public virtual Task<int> DeleteAsync(TEntity entity, CancellationToken cancellationToken = default)
         {
             this.Delete(entity);
             return this._context.SaveChangesAsync(cancellationToken);
         }
 
-        public ValueTask<TEntity> FindAsync(CancellationToken cancellationToken = default, params object[] keyValues)
+        public virtual Task<int> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default)
         {
-            return this._context.Set<TEntity>().FindAsync(keyValues, cancellationToken);
+            return this._context.SaveChangesAsync(cancellationToken);
         }
 
-        public IQueryable<TEntity> Query()
+        public virtual async Task<ListResult<TEntity>> QueryListAsync<TQuery>(TQuery query, CancellationToken cancellationToken = default) where TQuery :BaseQuery
         {
-            return this._context.Set<TEntity>();
-        }
+            var linq = this.DbSet;
 
-        public IQueryable<TEntity> Query(Expression<Func<TEntity, bool>> predicate)
-        {
-            return this._context.Set<TEntity>().Where(predicate);
-        }
-
-        public async Task<ListResult<TEntity>> QueryAsync(BaseQuery query, Action<IQueryable<TEntity>> linqAction = null)
-        {
-            var linq = this._context.Set<TEntity>().AsQueryable();
-            if (linqAction != null)
-            {
-                linqAction.Invoke(linq);
-            }
+            //HandleConditions(ref linq, query);
 
             var result = new ListResult<TEntity>(query.Offset, query.Limit);
 
             if (query.Offset <= 0)
             {
-                result.Count = await linq.CountAsync();
+                result.Count = await linq.CountAsync(cancellationToken: cancellationToken);
             }
 
             if (query.OrderBy != null && query.OrderBy.Any())
@@ -104,21 +94,9 @@ namespace Floo.Infrastructure.Persistence
             return result;
         }
 
-        public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-        {
-            return this._context.SaveChangesAsync(cancellationToken);
-        }
+        public virtual void HandleConditions<TQuery>(ref IQueryable<TEntity> linq, TQuery query) { }
 
-        public void Update(TEntity entity)
-        {
-        }
-
-        public Task<int> UpdateAndSaveAsync(TEntity entity, CancellationToken cancellationToken = default)
-        {
-            return this._context.SaveChangesAsync(cancellationToken);
-        }
-
-        public IQueryable<TEntity> Sort(IQueryable<TEntity> source, string propertyName, bool isDescending)
+        public virtual IQueryable<TEntity> Sort(IQueryable<TEntity> source, string propertyName, bool isDescending)
         {
             var type = typeof(TEntity);
             PropertyInfo prop = type.GetProperty(propertyName);
@@ -145,6 +123,11 @@ namespace Floo.Infrastructure.Persistence
                 .MakeGenericMethod(type, prop.PropertyType);
 
             return (IQueryable<TEntity>)sorter.Invoke(null, new[] { source, sortLambda });
+        }
+
+        public virtual Task<TEntity> FindByIdAsync(long id, CancellationToken cancellationToken = default)
+        {
+            return DbSet.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
         }
     }
 }

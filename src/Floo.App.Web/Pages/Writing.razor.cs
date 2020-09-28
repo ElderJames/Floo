@@ -23,17 +23,17 @@ namespace Floo.App.Web.Pages
         [Inject]
         public IIdentityContext IdentityContext { get; set; }
 
-        private ContentDto _Content = new ContentDto();
+        private ContentDto _content = new ContentDto();
 
         private async Task CreateOrUpdateContent()
         {
-            if (_Content.Id.HasValue)
+            if (_content.Id.HasValue)
             {
-                await ContentService.UpdateAsync(_Content);
+                await ContentService.UpdateAsync(_content);
             }
             else
             {
-                await ContentService.CreateAsync(_Content);
+                await ContentService.CreateAsync(_content);
             }
         }
 

@@ -5,7 +5,7 @@ namespace Floo.App.Shared.Cms.Tags
 {
     public interface ITagService
     {
-        public Task<TagDto> FindAsync(long id, CancellationToken cancellation = default);
+        public Task<TagDto> FindByIdAsync(long id, CancellationToken cancellation = default);
 
         public Task<long> CreateAsync(TagDto tag, CancellationToken cancellation = default);
 

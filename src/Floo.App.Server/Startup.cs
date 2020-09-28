@@ -1,8 +1,12 @@
 using Floo.App.Shared;
+using Floo.App.Shared.Cms.Articles;
+using Floo.App.Shared.Cms.Comments;
 using Floo.App.Shared.Cms.Contents;
+using Floo.Core.Entities.Cms.Articles;
 using Floo.Core.Entities.Cms.Contents;
 using Floo.Core.Entities.Identity;
 using Floo.Core.Entities.Identity.Users;
+using Floo.Core.Shared;
 using Floo.Infrastructure;
 using Floo.Infrastructure.Identity;
 using Floo.Infrastructure.Persistence;
@@ -13,11 +17,14 @@ using Microsoft.AspNetCore.Components.Server;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System.Text.Json;
 
 namespace Floo.App.Server
 {
@@ -49,6 +56,8 @@ namespace Floo.App.Server
                     option => option.MigrationsAssembly(GetType().Assembly.FullName)))
                 .AddDatabaseDeveloperPageExceptionFilter();
 
+            services.AddSingleton<IDbAdapter>(sp => new DapperDbAdapter(() => new SqlConnection(Configuration.GetConnectionString("DefaultConnection"))));
+
             services.AddDefaultIdentity<User>(options => Configuration.GetSection("Identity").Bind(options))
                 .AddRoles<Role>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -74,7 +83,9 @@ namespace Floo.App.Server
                 options.AssemblyString = typeof(IWeatherForecastService).Assembly.FullName;
             });
 
-            services.AddScoped<IContentService, ContentService>();
+            services.Configure<JsonOptions>(options => options.JsonSerializerOptions.IgnoreNullValues = true);
+
+            services.AddFlooCore();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

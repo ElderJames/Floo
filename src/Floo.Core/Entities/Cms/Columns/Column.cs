@@ -1,6 +1,6 @@
 ﻿using Floo.Core.Shared;
 
-namespace Floo.Core.Entities.Cms.SpecialColumns
+namespace Floo.Core.Entities.Cms.Columns
 {
     public class Column : BaseEntity
     {

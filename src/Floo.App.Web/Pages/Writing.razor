@@ -2,12 +2,12 @@
 @page "/{UserName}/{ContentSlug}/edit"
 
 <div class="Content-editor">
-    <Form Model="_Content" OnFinish="CreateOrUpdateContent">
+    <Form Model="_content" OnFinish="CreateOrUpdateContent">
         <FormItem>
-            <Input @bind-Value="context.Title" Size="large" Placeholder="标题" />
+            <Input @bind-Value="context.Article.Title" Size="large" Placeholder="标题" />
         </FormItem>
         <FormItem>
-            <Vditor.Editor @bind-Value="context.Contnet" Width="100%" MinHeight="500" />
+            <Vditor.Editor @bind-Value="context.Text" Width="100%" MinHeight="500" />
         </FormItem>
         <FormItem WrapperCol="new ColLayoutParam{ Offset = 20, Span = 4 }">
             <Button Type="@ButtonType.Primary" HtmlType="submit">

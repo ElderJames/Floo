@@ -120,10 +120,10 @@ namespace Floo.Core.Shared.Utils
                 var sourceType = typeof(TSource);
                 var targetType = typeof(TTarget);
 
-                if (IsEnumerable(sourceType) || IsEnumerable(targetType))
-                {
-                    throw new NotSupportedException("Enumerable types are not supported,please use MapList method.");
-                }
+                //if (IsEnumerable(sourceType) || IsEnumerable(targetType))
+                //{
+                //    throw new NotSupportedException("Enumerable types are not supported,please use MapList method.");
+                //}
 
                 var parameter = Expression.Parameter(sourceType, "p");
 
@@ -138,7 +138,7 @@ namespace Floo.Core.Shared.Utils
                         continue;
                     }
 
-                    if (sourceItem.GetCustomAttribute<NotMappedAttribute>() != null)
+                    if (targetItem.GetCustomAttribute<NotMappedAttribute>() != null)
                     {
                         continue;
                     }
@@ -205,60 +205,15 @@ namespace Floo.Core.Shared.Utils
                 return lambda.Compile();
             }
 
-            private static Expression GetClassExpression(Expression sourceProperty, Type sourceType, Type targetType)
-            {
-                var testItem = Expression.NotEqual(sourceProperty, Expression.Constant(null, sourceType));
-
-                var mapperType = typeof(MapperInternal<,>).MakeGenericType(sourceType, targetType);
-                var ifTrue = Expression.Call(mapperType.GetMethod(nameof(Map), new[] { sourceType }) ?? throw new InvalidOperationException(), sourceProperty);
-
-                var conditionItem = Expression.Condition(testItem, ifTrue, Expression.Constant(null, targetType));
-
-                return conditionItem;
-            }
-
-            private static Expression GetListExpression(Expression sourceProperty, Type sourceType, Type targetType)
-            {
-                var testItem = Expression.NotEqual(sourceProperty, Expression.Constant(null, sourceType));
-
-                var sourceArg = sourceType.IsArray ? sourceType.GetElementType() : sourceType.GetGenericArguments()[0];
-                var targetArg = targetType.IsArray ? targetType.GetElementType() : targetType.GetGenericArguments()[0];
-                var mapperType = typeof(MapperInternal<,>).MakeGenericType(sourceArg, targetArg);
-
-                var mapperExecMap = Expression.Call(mapperType.GetMethod(nameof(MapList), new[] { sourceType }), sourceProperty);
-
-                Expression ifTrue;
-                if (targetType == mapperExecMap.Type)
-                {
-                    ifTrue = mapperExecMap;
-                }
-                else if (targetType.IsArray)
-                {
-                    ifTrue = Expression.Call(typeof(Enumerable), nameof(Enumerable.ToArray), new[] { mapperExecMap.Type.GenericTypeArguments[0] }, mapperExecMap);
-                }
-                else if (typeof(IDictionary).IsAssignableFrom(targetType))
-                {
-                    ifTrue = Expression.Constant(null, targetType);
-                }
-                else
-                {
-                    ifTrue = Expression.Convert(mapperExecMap, targetType);
-                }
-
-                var conditionItem = Expression.Condition(testItem, ifTrue, Expression.Constant(null, targetType));
-
-                return conditionItem;
-            }
-
             private static Action<TSource, TTarget> GetMapAction()
             {
                 var sourceType = typeof(TSource);
                 var targetType = typeof(TTarget);
 
-                if (IsEnumerable(sourceType) || IsEnumerable(targetType))
-                {
-                    throw new NotSupportedException("Enumerable types are not supported,please use MapList method.");
-                }
+                //if (IsEnumerable(sourceType) || IsEnumerable(targetType))
+                //{
+                //    throw new NotSupportedException("Enumerable types are not supported,please use MapList method.");
+                //}
 
                 var sourceParameter = Expression.Parameter(sourceType, "p");
                 var targetParameter = Expression.Parameter(targetType, "t");
@@ -275,7 +230,7 @@ namespace Floo.Core.Shared.Utils
                         continue;
                     }
 
-                    if (sourceItem.GetCustomAttribute<NotMappedAttribute>() != null)
+                    if (targetItem.GetCustomAttribute<NotMappedAttribute>() != null)
                     {
                         continue;
                     }
@@ -348,6 +303,51 @@ namespace Floo.Core.Shared.Utils
 
                 var lambda = Expression.Lambda<Action<TSource, TTarget>>(conditionTarget, sourceParameter, targetParameter);
                 return lambda.Compile();
+            }
+
+            private static Expression GetClassExpression(Expression sourceProperty, Type sourceType, Type targetType)
+            {
+                var testItem = Expression.NotEqual(sourceProperty, Expression.Constant(null, sourceType));
+
+                var mapperType = typeof(MapperInternal<,>).MakeGenericType(sourceType, targetType);
+                var ifTrue = Expression.Call(mapperType.GetMethod(nameof(Map), new[] { sourceType }) ?? throw new InvalidOperationException(), sourceProperty);
+
+                var conditionItem = Expression.Condition(testItem, ifTrue, Expression.Constant(null, targetType));
+
+                return conditionItem;
+            }
+
+            private static Expression GetListExpression(Expression sourceProperty, Type sourceType, Type targetType)
+            {
+                var testItem = Expression.NotEqual(sourceProperty, Expression.Constant(null, sourceType));
+
+                var sourceArg = sourceType.IsArray ? sourceType.GetElementType() : sourceType.GetGenericArguments()[0];
+                var targetArg = targetType.IsArray ? targetType.GetElementType() : targetType.GetGenericArguments()[0];
+                var mapperType = typeof(MapperInternal<,>).MakeGenericType(sourceArg, targetArg);
+
+                var mapperExecMap = Expression.Call(mapperType.GetMethod(nameof(MapList), new[] { sourceType }), sourceProperty);
+
+                Expression ifTrue;
+                if (targetType == mapperExecMap.Type)
+                {
+                    ifTrue = mapperExecMap;
+                }
+                else if (targetType.IsArray)
+                {
+                    ifTrue = Expression.Call(typeof(Enumerable), nameof(Enumerable.ToArray), new[] { mapperExecMap.Type.GenericTypeArguments[0] }, mapperExecMap);
+                }
+                else if (typeof(IDictionary).IsAssignableFrom(targetType))
+                {
+                    ifTrue = Expression.Constant(null, targetType);
+                }
+                else
+                {
+                    ifTrue = Expression.Convert(mapperExecMap, targetType);
+                }
+
+                var conditionItem = Expression.Condition(testItem, ifTrue, Expression.Constant(null, targetType));
+
+                return conditionItem;
             }
 
             private static bool IsNullableType(Type type)

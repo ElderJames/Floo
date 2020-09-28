@@ -1,7 +1,6 @@
 ﻿using Floo.Core.Entities.Cms.Channels;
 using Floo.Core.Entities.Cms.Contents;
-using Floo.Core.Entities.Cms.SpecialColumns;
-using Floo.Core.Shared;
+using Floo.Core.Entities.Cms.Columns;
 
 namespace Floo.Core.Entities.Cms.Articles
 {

@@ -1,4 +1,7 @@
-﻿using Floo.App.Shared.Cms.Contents;
+﻿using Floo.App.Shared.Cms.Articles;
+using Floo.App.Shared.Cms.Contents;
+using Floo.App.Shared.Cms.Questions;
+using Floo.App.Shared.Identity.User;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,14 +10,14 @@ using System.Threading.Tasks;
 
 namespace Floo.App.Web.Pages
 {
-    public partial class Index
+    public partial class Index: ComponentBase
     {
         [Parameter]
         public string ChannelName { get; set; }
 
-        [Inject] public IContentService ContentService { get; set; }
+        [Inject] public IArticleService articleService { get; set; }
 
-        private List<ContentDto> _ContentList = new List<ContentDto>();
+        private List<ContentDto> _articleList = new List<ContentDto>();
 
         private int _pageIndex = 1;
 
@@ -33,29 +36,37 @@ namespace Floo.App.Web.Pages
             //{
             //    _ContentList.AddRange(ContentResult.Items);
             //}
-            _ContentList.Add(new ContentDto
+            _articleList.Add(new ContentDto
             {
-                Title = "文章1",
-                Summary = "文章1文章1文章1文章1文章1文章1文章1文章1文章1",
-                Cover = "https://picb.zhimg.com/v2-320009747fc474ccd71dbd87e5767b64_1440w.jpg?source=172ae18b",
-                Slug = "wenzhang1",
-                Author = "Liu",
-                Type=ContentType.Article
+                Article = new ArticleDto
+                {
+                    Title = "文章1",
+                    Summary = "文章1文章1文章1文章1文章1文章1文章1文章1文章1",
+                    Cover = "https://picb.zhimg.com/v2-320009747fc474ccd71dbd87e5767b64_1440w.jpg?source=172ae18b",
+                    Slug = "wenzhang1",
+                },
+                Author = new UserDto
+                {
+                    NickName = "Liu"
+                }
             });
-            _ContentList.Add(new ContentDto
+            _articleList.Add(new ContentDto
             {
-                Title = "What is blazor?",
-                Summary = "文章1文章1文章1文章1文章1文章1文章1文章1文章1",
-                Cover = "https://picb.zhimg.com/v2-320009747fc474ccd71dbd87e5767b64_1440w.jpg?source=172ae18b",
-                Slug = "wenzhang1",
-                Author = "Liu",
+                Question = new QuestionDto
+                {
+                    Title = "What is blazor?",
+                    Summary = "文章1文章1文章1文章1文章1文章1文章1文章1文章1",
+                    Cover = "https://picb.zhimg.com/v2-320009747fc474ccd71dbd87e5767b64_1440w.jpg?source=172ae18b",
+                    Slug = "wenzhang1",
+                },
+                Author = new UserDto { UserName = "Liu" },
                 Type = ContentType.Question
             });
         }
 
         private async Task CreateContent()
         {
-            await ContentService.CreateAsync(new ContentDto
+            await articleService.CreateAsync(new ArticleDto
             {
                 Title = "文章1",
                 Summary = "文章1文章1文章1文章1文章1文章1文章1文章1文章1",
