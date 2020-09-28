@@ -6,6 +6,7 @@ using Floo.Core.Entities.Cms.Articles;
 using Floo.Core.Entities.Cms.Contents;
 using Floo.Core.Entities.Identity;
 using Floo.Core.Entities.Identity.Users;
+using Floo.Core.Shared;
 using Floo.Infrastructure;
 using Floo.Infrastructure.Identity;
 using Floo.Infrastructure.Persistence;
@@ -16,6 +17,7 @@ using Microsoft.AspNetCore.Components.Server;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -51,6 +53,8 @@ namespace Floo.App.Server
                     Configuration.GetConnectionString("DefaultConnection"),
                     option => option.MigrationsAssembly(GetType().Assembly.FullName)))
                 .AddDatabaseDeveloperPageExceptionFilter();
+
+            services.AddSingleton<IDbAdapter>(sp => new DapperDbAdapter(() => new SqlConnection(Configuration.GetConnectionString("DefaultConnection"))));
 
             services.AddDefaultIdentity<User>(options => Configuration.GetSection("Identity").Bind(options))
                 .AddRoles<Role>()
