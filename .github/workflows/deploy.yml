@@ -1,0 +1,29 @@
+﻿name: Deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    if: github.repository_owner == 'ElderJames'
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.100-rc.1.20452.10
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "10.x"
+
+      - name: Check Building ⚙
+        run: |
+          npm install
+          dotnet build ./Floo.sln
+          dotnet publish ./Floo.sln -c Release -o cargo
