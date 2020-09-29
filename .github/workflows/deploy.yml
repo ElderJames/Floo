@@ -1,16 +1,17 @@
 ﻿name: Deploy
 
 on:
-  pull_request:
+  push:
     branches:
       - master
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
+    if: github.repository_owner == 'ElderJames'
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
 
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
