@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Floo.App.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201003125801_Model_V2")]
+    [Migration("20201003130958_Model_V2")]
     partial class Model_V2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -68,8 +68,6 @@ namespace Floo.App.Server.Migrations
 
                     b.HasIndex("ContentId")
                         .IsUnique();
-
-                    b.HasIndex("QuestionId");
 
                     b.ToTable("Answers");
                 });
@@ -734,15 +732,7 @@ namespace Floo.App.Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Floo.Core.Entities.Cms.Questions.Question", "Question")
-                        .WithMany()
-                        .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Content");
-
-                    b.Navigation("Question");
                 });
 
             modelBuilder.Entity("Floo.Core.Entities.Cms.Articles.Article", b =>

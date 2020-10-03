@@ -22,6 +22,10 @@ namespace Floo.App.Server.Migrations
                 name: "IX_Answers_ContentId",
                 table: "Answers");
 
+            migrationBuilder.DropIndex(
+                name: "IX_Answers_QuestionId",
+                table: "Answers");
+
             migrationBuilder.RenameColumn(
                 name: "ContnetId",
                 table: "Articles",
@@ -67,14 +71,6 @@ namespace Floo.App.Server.Migrations
                 onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Answers_Questions_QuestionId",
-                table: "Answers",
-                column: "QuestionId",
-                principalTable: "Questions",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
                 name: "FK_Articles_Contents_ContentId",
                 table: "Articles",
                 column: "ContentId",
@@ -87,10 +83,6 @@ namespace Floo.App.Server.Migrations
         {
             migrationBuilder.DropForeignKey(
                 name: "FK_Answers_Contents_ContentId",
-                table: "Answers");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Answers_Questions_QuestionId",
                 table: "Answers");
 
             migrationBuilder.DropForeignKey(
@@ -131,6 +123,11 @@ namespace Floo.App.Server.Migrations
                 name: "IX_Answers_ContentId",
                 table: "Answers",
                 column: "ContentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Answers_QuestionId",
+                table: "Answers",
+                column: "QuestionId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Answers_Contents_ContentId",
