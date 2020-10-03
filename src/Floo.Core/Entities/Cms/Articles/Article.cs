@@ -18,7 +18,7 @@ namespace Floo.Core.Entities.Cms.Articles
 
         public long ChannelId { get; set; }
 
-        public long ContnetId { get; set; }
+        public long ContentId { get; set; }
 
         public Channel Channel { get; set; }
 
