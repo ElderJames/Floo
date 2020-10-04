@@ -3,6 +3,7 @@ using Floo.App.Shared.Identity.User;
 using Floo.Core.Shared;
 using Microsoft.AspNetCore.Components;
 using System.Threading.Tasks;
+using Floo.App.Shared.Cms.Articles;
 
 namespace Floo.App.Web.Pages
 {
@@ -23,7 +24,10 @@ namespace Floo.App.Web.Pages
         [Inject]
         public IIdentityContext IdentityContext { get; set; }
 
-        private ContentDto _content = new ContentDto();
+        private readonly ContentDto _content = new ContentDto
+        {
+            Article = new ArticleDto()
+        };
 
         private async Task CreateOrUpdateContent()
         {
