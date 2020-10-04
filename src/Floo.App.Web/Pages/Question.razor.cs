@@ -20,9 +20,9 @@ namespace Floo.App.Web.Pages
         public IQuestionService QuestionService { get; set; }
         [Inject]
         public IAnswerService AnswerService { get; set; }
-        private QuestionDetailDto _question;
+        private QuestionDetailDto _question=new QuestionDetailDto();
         private List<AnswerDto> _answers = new List<AnswerDto>();
-        private AnswerDto _answerModel;
+        private AnswerDto _answerModel=new AnswerDto();
         private bool _inEdit;
         private string _labelOfEdit = "编辑";
         protected override async Task OnInitializedAsync()
@@ -66,10 +66,13 @@ namespace Floo.App.Web.Pages
                 Slug = Slug,
                 UserName = Username
             });
-            _answers = (await AnswerService.QueryListAsync(new AnswerQuery
+            if (_question != null)
             {
-                ContentId = _question.ContentId
-            })).Items.ToList();
+                _answers = (await AnswerService.QueryListAsync(new AnswerQuery
+                {
+                    ContentId = _question.ContentId
+                })).Items.ToList();
+            }
         }
     }
 }

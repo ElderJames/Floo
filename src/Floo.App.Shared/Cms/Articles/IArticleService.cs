@@ -13,6 +13,6 @@ namespace Floo.App.Shared.Cms.Articles
 
         public Task<ListResult<ArticleDto>> QueryListAsync(ArticleQuery query);
 
-       Task<ArticleDetailDto> QueryArticleDetail(ArticleDetailQueryParam param);
+        Task<ArticleDetailDto> QueryArticleDetail(ArticleDetailQueryParam param);
     }
 }

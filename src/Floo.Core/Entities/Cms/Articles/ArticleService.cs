@@ -45,7 +45,8 @@ namespace Floo.Core.Entities.Cms.Articles
 
         public async Task<ArticleDetailDto> QueryArticleDetail(ArticleDetailQueryParam param)
         {
-            return await _articleStorage.QueryArticleDetail(param);
+           var result= await _articleStorage.QueryArticleDetail(param);
+           return result;
         }
 
         public async Task<bool> UpdateAsync(ArticleDto article, CancellationToken cancellation = default)

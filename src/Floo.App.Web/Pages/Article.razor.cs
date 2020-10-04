@@ -18,9 +18,9 @@ namespace Floo.App.Web.Pages
         public IArticleService ArticleService { get; set; }
         [Inject]
         public ICommentService CommentService { get; set; }
-        private ArticleDetailDto _article;
+        private ArticleDetailDto _article=new ArticleDetailDto();
         private List<CommentDto> _comments = new List<CommentDto>();
-        private CommentDto _commentModel;
+        private CommentDto _commentModel=new CommentDto();
         private bool _inEdit;
         private string _labelOfEdit = "编辑";
         protected override async Task OnInitializedAsync()
@@ -64,11 +64,13 @@ namespace Floo.App.Web.Pages
                 Slug = Slug,
                 UserName = Username
             });
-            _comments = (await CommentService.QueryListAsync(new CommentQuery
+            if (_article != null)
             {
-                ContentId = _article.ContentId
-            })).Items.ToList();
-
+                _comments = (await CommentService.QueryListAsync(new CommentQuery
+                {
+                    ContentId = _article.ContentId
+                })).Items.ToList();
+            }
         }
     }
 }
