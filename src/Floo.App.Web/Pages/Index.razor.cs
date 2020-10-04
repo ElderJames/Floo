@@ -47,7 +47,7 @@ namespace Floo.App.Web.Pages
                 },
                 Author = new UserDto
                 {
-                    NickName = "Liu"
+                    UserName = "Liu"
                 }
             });
             _articleList.Add(new ContentDto

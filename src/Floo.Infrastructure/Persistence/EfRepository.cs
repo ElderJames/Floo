@@ -65,7 +65,7 @@ namespace Floo.Infrastructure.Persistence
         {
             var linq = this.DbSet;
 
-            //HandleConditions(ref linq, query);
+            HandleConditions(ref linq, query);
 
             var result = new ListResult<TEntity>(query.Offset, query.Limit);
 

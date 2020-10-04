@@ -1,6 +1,7 @@
 ﻿using Floo.Core.Entities.Cms.Answers;
 using Floo.Core.Shared;
 using System.Linq;
+using Floo.App.Shared.Cms.Answers;
 
 namespace Floo.Infrastructure.Persistence.Repositories
 {
@@ -10,7 +11,10 @@ namespace Floo.Infrastructure.Persistence.Repositories
 
         public override void HandleConditions<TQuery>(ref IQueryable<Answer> linq, TQuery query)
         {
-
+            if (query is AnswerQuery answerQuery)
+            {
+                linq = linq.Where(l => l.ContentId == answerQuery.ContentId);
+            }
         }
     }
 }
