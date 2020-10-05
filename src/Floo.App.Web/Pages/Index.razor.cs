@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Floo.App.Shared.Identity.User;
 
 namespace Floo.App.Web.Pages
 {
@@ -37,7 +38,8 @@ namespace Floo.App.Web.Pages
                 {
                     Text = u.Contnet.Text,
                     Type = ContentType.Article,
-                    Article = u
+                    Article = u,
+                    Author = MockUser()
                 }));
             }
 
@@ -48,9 +50,18 @@ namespace Floo.App.Web.Pages
                 {
                     Text = u.Summary,
                     Type = ContentType.Question,
-                    Question = u
+                    Question = u,
+                    Author = MockUser()
                 }));
             }
+        }
+
+        private UserDto MockUser()
+        {
+            return new UserDto
+            {
+                UserName = "Liu"
+            };
         }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using Floo.App.Shared.Cms.Contents;
 using Floo.App.Shared.Identity.User;
 using Floo.Core.Shared;
@@ -22,6 +23,10 @@ namespace Floo.App.Web.Pages
             }
             else
             {
+                if (string.IsNullOrEmpty(_question.Slug))
+                {
+                    _question.Slug = Uri.EscapeDataString(_question.Title);
+                }
                 await QuestionService.CreateAsync(_question);
             }
         }
