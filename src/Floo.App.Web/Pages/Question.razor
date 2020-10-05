@@ -1,16 +1,16 @@
-﻿@page "/question/{slug}"
+﻿@page "/question/{userName}/{slug}"
 @attribute [Microsoft.AspNetCore.Authorization.AllowAnonymous]
 
 <Row Class="article-detail">
     <Col>
-    <Card Title="@_Question.Title" Class="question-card" Actions="new[] { actionFocusOn, actionEdit(OnAddCommentClick), actionShare }">
+    <Card Title="@_question.Title" Class="question-card" Actions="new[] { actionFocusOn, actionEdit(OnAddCommentClick), actionShare }">
         <Extra>
-            <Button Type="primary" OnClick="OnEditButtonClick">@labelOfEdit</Button>
+            <Button Type="primary" OnClick="OnEditButtonClick">@_labelOfEdit</Button>
         </Extra>
         <Body>
             <div class="post-data">
                 <time itemprop="datePublished">
-                    发布于 @_Question.CreatedAtUtc.ToShortDateString()
+                    发布于 @_question.CreatedAtUtc.ToShortDateString()
                 </time>
                 / <span>默认频道</span> / <a href="#comments">
                     10个回答
@@ -25,13 +25,13 @@
                     <a>标签4</a>
                 </span>
             </p>
-            @if (inEdit)
+            @if (_inEdit)
             {
-                <Vditor.Editor @bind-Value="@_Question.Contnet.Text" Width="100%" MinHeight="500"></Vditor.Editor>
+                <Vditor.Editor @bind-Value="@_question.Content" Width="100%" MinHeight="500"></Vditor.Editor>
             }
             else
             {
-                <Vditor.Preview Markdown="@_Question.Contnet.Text"></Vditor.Preview>
+                <Vditor.Preview Markdown="@_question.Content"></Vditor.Preview>
                 <Divider />
             }
         </Body>
@@ -59,7 +59,7 @@
                             </span>
                         </div><!--!-->
                         <div class="ant-comment-content-detail">
-                            <Vditor.Editor @bind-Value="@_CommentModel.Content" Width="100%" MinHeight="500"></Vditor.Editor>
+                            <Vditor.Editor @bind-Value="@_answerModel.Content" Width="100%" MinHeight="500"></Vditor.Editor>
                         </div>
                         <ul class="ant-comment-actions">
                             <li>
@@ -78,7 +78,7 @@
     <Col>
     <Card Class="comment-card" Id="comments">
         <Divider Orientation="left" Style="font-weight:bold">99个回答</Divider>
-        <AnswerList Answers="@_Comments" />
+        <AnswerList Answers="@_answers" />
         <div class="comment-pagination">
             <Pagination PageIndex="1" Total="50"></Pagination>
         </div>

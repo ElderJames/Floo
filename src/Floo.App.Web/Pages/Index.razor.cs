@@ -1,78 +1,67 @@
 ﻿using Floo.App.Shared.Cms.Articles;
 using Floo.App.Shared.Cms.Contents;
 using Floo.App.Shared.Cms.Questions;
-using Floo.App.Shared.Identity.User;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
+using Floo.App.Shared.Identity.User;
 
 namespace Floo.App.Web.Pages
 {
-    public partial class Index: ComponentBase
+    public partial class Index : ComponentBase
     {
         [Parameter]
         public string ChannelName { get; set; }
 
-        [Inject] public IArticleService articleService { get; set; }
+        [Inject] public IArticleService ArticleService { get; set; }
+        [Inject] public IQuestionService QuestionService { get; set; }
 
-        private List<ContentDto> _articleList = new List<ContentDto>();
+        private List<ContentDto> _contentList = new List<ContentDto>();
 
         private int _pageIndex = 1;
 
-        private ContentQuery ContentQuery = new ContentQuery();
+        private readonly ArticleQuery _articleQuery = new ArticleQuery();
+        private readonly QuestionQuery _questionQuery = new QuestionQuery();
 
         protected override async Task OnInitializedAsync()
         {
             await GetContents();
-
         }
 
         private async Task GetContents()
         {
-            //var ContentResult = await ContentService.QueryListAsync(ContentQuery);
-            //if (ContentResult.Items.Any())
-            //{
-            //    _ContentList.AddRange(ContentResult.Items);
-            //}
-            _articleList.Add(new ContentDto
+            var articleResult = await ArticleService.QueryListAsync(_articleQuery);
+            if (articleResult.Items.Any())
             {
-                Article = new ArticleDto
+                _contentList.AddRange(articleResult.Items.Select(u => new ContentDto
                 {
-                    Title = "文章1",
-                    Summary = "文章1文章1文章1文章1文章1文章1文章1文章1文章1",
-                    Cover = "https://picb.zhimg.com/v2-320009747fc474ccd71dbd87e5767b64_1440w.jpg?source=172ae18b",
-                    Slug = "wenzhang1",
-                },
-                Author = new UserDto
-                {
-                    NickName = "Liu"
-                }
-            });
-            _articleList.Add(new ContentDto
+                    Text = u.Contnet.Text,
+                    Type = ContentType.Article,
+                    Article = u,
+                    Author = MockUser()
+                }));
+            }
+
+            var questionResult = await QuestionService.QueryListAsync(_questionQuery);
+            if (questionResult.Items.Any())
             {
-                Question = new QuestionDto
+                _contentList.AddRange(questionResult.Items.Select(u => new ContentDto
                 {
-                    Title = "What is blazor?",
-                    Summary = "文章1文章1文章1文章1文章1文章1文章1文章1文章1",
-                    Cover = "https://picb.zhimg.com/v2-320009747fc474ccd71dbd87e5767b64_1440w.jpg?source=172ae18b",
-                    Slug = "wenzhang1",
-                },
-                Author = new UserDto { UserName = "Liu" },
-                Type = ContentType.Question
-            });
+                    Text = u.Summary,
+                    Type = ContentType.Question,
+                    Question = u,
+                    Author = MockUser()
+                }));
+            }
         }
 
-        private async Task CreateContent()
+        private UserDto MockUser()
         {
-            await articleService.CreateAsync(new ArticleDto
+            return new UserDto
             {
-                Title = "文章1",
-                Summary = "文章1文章1文章1文章1文章1文章1文章1文章1文章1",
-                Cover = "https://picb.zhimg.com/v2-320009747fc474ccd71dbd87e5767b64_1440w.jpg?source=172ae18b",
-                Slug = "wenzhang1"
-            });
+                UserName = "Liu"
+            };
         }
     }
 }

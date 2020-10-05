@@ -1,16 +1,16 @@
-﻿@page "/{username}/{slug}"
+﻿@page "/{Username}/{Slug}"
 @attribute [Microsoft.AspNetCore.Authorization.AllowAnonymous]
 
 <Row Class="article-detail">
     <Col>
-    <Card Title="@_Article.Title" Class="content-card">
+    <Card Title="@_article.Title" Class="content-card">
         <Extra>
-            <Button Type="primary" OnClick="OnEditButtonClick">@labelOfEdit</Button>
+            <Button Type="primary" OnClick="OnEditButtonClick">@_labelOfEdit</Button>
         </Extra>
         <Body>
             <div class="post-data">
                 <time itemprop="datePublished">
-                    发布于 @_Article.CreatedAtUtc.ToShortDateString()
+                    发布于 @_article.CreatedAtUtc.ToShortDateString()
                 </time>
                 / <span>默认频道</span> / <a href="#comments">
                     没有评论
@@ -25,20 +25,20 @@
                     <a>标签4</a>
                 </span>
             </p>
-            @if (inEdit)
+            @if (_inEdit)
             {
-                <Vditor.Editor @bind-Value="@_Article.Contnet.Text" Width="100%" MinHeight="500" />
+                <Vditor.Editor @bind-Value="@_article.Content" Width="100%" MinHeight="500" />
             }
             else
             {
-                <Vditor.Preview Markdown="@_Article.Contnet?.Text"></Vditor.Preview>
+                <Vditor.Preview Markdown="@_article.Content"></Vditor.Preview>
                 <Divider />
                 <p class="post-info">
-                    本文由 <a>@_Article.Author</a> 创作，采用
+                    本文由 <a>@_article.Author</a> 创作，采用
                     <a href="https://creativecommons.org/licenses/by/4.0/"
                        target="_blank"
                        rel="external nofollow">知识共享署名4.0</a> 国际许可协议进行许可<br>本站文章除注明转载/出处外，均为作者原创或翻译，转载前请务必署名<br>最后编辑时间为:
-                    @_Article.UpdatedAtUtc.ToShortDateString()
+                    @_article.UpdatedAtUtc.ToShortDateString()
                 </p>
             }
         </Body>
@@ -47,7 +47,7 @@
     <Col>
     <Card Class="comment-card" Id="comments">
         <Divider Orientation="left" Style="font-weight:bold">文章评论</Divider>
-        <CommentList Comments="@_Comments" />
+        <CommentList Comments="@_comments" />
         <Divider />
         <div class="comment-pagination">
             <Pagination PageIndex="1" Total="50"></Pagination>
@@ -57,10 +57,10 @@
     <Col>
     <Card Class="comment-form-card">
         <Divider Orientation="left" Style="font-weight:bold">请登录</Divider>
-        <Comment Avatar="@_CommentModel.Avatar">
+        <Comment Avatar="@_commentModel.Avatar">
             <ContentTemplate>
                 <div>
-                    <TextArea MinRows="4" @bind-Value="@_CommentModel.Content" />
+                    <TextArea MinRows="4" @bind-Value="@_commentModel.Content" />
                     <br />
                     <br />
                     <Button type="primary" OnClick="OnAddCommentClick">

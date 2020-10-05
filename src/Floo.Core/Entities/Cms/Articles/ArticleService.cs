@@ -38,9 +38,15 @@ namespace Floo.Core.Entities.Cms.Articles
             {
                 Items = Mapper.Map<Article, ArticleDto>(result.Items, (from, to) =>
                 {
-                    to.Contnet = Mapper.Map<Content, ContentDto>(from.Contnet);
+                    to.Contnet = Mapper.Map<Content, ContentDto>(from.Content);
                 })
             };
+        }
+
+        public async Task<ArticleDetailDto> QueryArticleDetail(ArticleDetailQueryParam param)
+        {
+           var result= await _articleStorage.QueryArticleDetail(param);
+           return result;
         }
 
         public async Task<bool> UpdateAsync(ArticleDto article, CancellationToken cancellation = default)

@@ -1,6 +1,7 @@
 ﻿using Floo.Core.Entities.Cms.Comments;
 using Floo.Core.Shared;
 using System.Linq;
+using Floo.App.Shared.Cms.Comments;
 
 namespace Floo.Infrastructure.Persistence.Repositories
 {
@@ -11,6 +12,10 @@ namespace Floo.Infrastructure.Persistence.Repositories
 
         public override void HandleConditions<TQuery>(ref IQueryable<Comment> linq, TQuery query)
         {
+            if (query is CommentQuery commentQuery)
+            {
+                linq = linq.Where(l => l.ContentId == commentQuery.ContentId);
+            }
         }
     }
 }

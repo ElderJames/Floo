@@ -1,14 +1,28 @@
-﻿@namespace Floo.App.Web.Components
+﻿@using Floo.App.Shared.Cms.Contents
+@namespace Floo.App.Web.Components
 
 <AntList DataSource="@Contents" ItemLayout="@ListItemLayout.Vertical" Class="content-list">
     <ListItem Class="content-list-item" Actions="@(new[] {LikeButtons(3), IconText(("star", "156")), IconText(("like", "156")), IconText(("message", "2")) })">
-        <h1><a href="/@context.Author/@context.Article?.Slug">@context.Article?.Title</a></h1>
-        <div class="content-content">
-            <div class="content-cover">
-                <img src="@context.Article?.Cover" />
+        @if (context.Type == ContentType.Article)
+        {
+            <div class="content-content">
+                <div class="content-cover">
+                    <img src="@context.Article?.Cover" />
+                </div>
+                @context.Article?.Contnet
             </div>
-            @context.Article?.Contnet
-        </div>
+            <h1><a href="/@context.Author.UserName/@context.Article?.Slug">@context.Article?.Title</a></h1>
+        }
+        else if (context.Type == ContentType.Question)
+        {
+            <h1><a href="/question/@context.Author.UserName/@context.Question.Slug">@context.Question?.Title</a></h1>
+            <div class="content-content">
+                <div class="content-cover">
+                    <img src="@context.Question?.Cover" />
+                </div>
+                @context.Question?.Summary
+            </div>
+        }
     </ListItem>
 </AntList>
 

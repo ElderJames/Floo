@@ -12,5 +12,7 @@ namespace Floo.App.Shared.Cms.Articles
         public Task<bool> UpdateAsync(ArticleDto article, CancellationToken cancellation = default);
 
         public Task<ListResult<ArticleDto>> QueryListAsync(ArticleQuery query);
+
+        Task<ArticleDetailDto> QueryArticleDetail(ArticleDetailQueryParam param);
     }
 }

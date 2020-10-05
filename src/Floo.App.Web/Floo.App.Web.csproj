@@ -53,18 +53,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="Components\CommentForm.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Watch Remove="Components\CommentForm.razor" />
-    <Watch Remove="Components\CommentForm.razor.less" />
-    <Watch Remove="Components\CommentList.razor" />
-    <Watch Remove="Components\ContentList - Copy.razor.less" />
-    <Watch Remove="Pages\Article.razor.less" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="Components\CommentForm.razor" />
   </ItemGroup>
 
