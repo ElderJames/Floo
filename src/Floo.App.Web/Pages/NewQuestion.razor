@@ -7,11 +7,11 @@
             <Input @bind-Value="context.Title" Size="large" Placeholder="标题" />
         </FormItem>
         <FormItem>
-            <Vditor.Editor @bind-Value="context.Title" Width="100%" MinHeight="500" />
+            <Vditor.Editor @bind-Value="context.Summary" Width="100%" MinHeight="500" />
         </FormItem>
         <FormItem WrapperCol="new ColLayoutParam{ Offset = 20, Span = 4 }">
             <Button Type="@ButtonType.Primary" HtmlType="submit">
-                提交
+                发布问题
             </Button>
         </FormItem>
     </Form>

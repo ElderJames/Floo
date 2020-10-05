@@ -22,7 +22,7 @@ namespace Floo.App.Web.Pages
             }
             else
             {
-                //await QuestionService.CreateAsync(_question);
+                await QuestionService.CreateAsync(_question);
             }
         }
 
