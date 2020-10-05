@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Floo.App.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201004031941_Model_V1")]
+    [Migration("20201005091609_Model_V1")]
     partial class Model_V1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -793,11 +793,13 @@ namespace Floo.App.Server.Migrations
 
             modelBuilder.Entity("Floo.Core.Entities.Cms.Questions.Question", b =>
                 {
-                    b.HasOne("Floo.Core.Entities.Cms.Contents.Content", null)
+                    b.HasOne("Floo.Core.Entities.Cms.Contents.Content", "Content")
                         .WithOne("Question")
                         .HasForeignKey("Floo.Core.Entities.Cms.Questions.Question", "ContentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Content");
                 });
 
             modelBuilder.Entity("Floo.Core.Entities.Identity.RoleClaim", b =>

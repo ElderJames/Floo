@@ -11,7 +11,6 @@ namespace Floo.Core.Entities.Cms.Questions
 
         public long ContentId { get; set; }
 
-        [NotMapped]
         public Content Content { get; set; }
     }
 }

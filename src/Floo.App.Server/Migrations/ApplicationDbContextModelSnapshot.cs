@@ -791,11 +791,13 @@ namespace Floo.App.Server.Migrations
 
             modelBuilder.Entity("Floo.Core.Entities.Cms.Questions.Question", b =>
                 {
-                    b.HasOne("Floo.Core.Entities.Cms.Contents.Content", null)
+                    b.HasOne("Floo.Core.Entities.Cms.Contents.Content", "Content")
                         .WithOne("Question")
                         .HasForeignKey("Floo.Core.Entities.Cms.Questions.Question", "ContentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Content");
                 });
 
             modelBuilder.Entity("Floo.Core.Entities.Identity.RoleClaim", b =>
