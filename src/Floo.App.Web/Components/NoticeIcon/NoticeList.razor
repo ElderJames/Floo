@@ -2,7 +2,7 @@
 @inherits AntDomComponentBase
 
 <TabPane Key="@TabKey">
-    <Tab>@Title (@(Data?.Count ?? 0))</Tab>
+    <TabTemplate>@Title (@(Data?.Count ?? 0))</TabTemplate>
     <ChildContent>
         @if (Data == null || Data.Count <= 0)
         {
